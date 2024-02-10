@@ -1,0 +1,26 @@
+<View
+android:id="@+id/image_1"
+android:layout_width="45dp"
+android:layout_height="45dp"
+android:layout_alignParentLeft="true"
+android:layout_marginLeft="20dp"
+android:layout_alignParentTop="true"
+android:layout_marginTop="40dp"
+android:background="@drawable/image_1"
+ />
+
+<!-- drawable/image_1.xml -->
+<vector
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:aapt="http://schemas.android.com/aapt"
+android:width="45dp"
+android:height="45dp"
+android:viewportWidth="45"
+android:viewportHeight="45"
+ >
+<group>
+<clip-path
+android:pathData="M0 0H45V45H0V0Z"
+/>
+</group>
+</vector>
