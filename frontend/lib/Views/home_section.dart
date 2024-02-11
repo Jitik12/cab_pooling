@@ -30,7 +30,6 @@ class _HomeSectionState extends State<HomeSection> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Column(
         children: [
