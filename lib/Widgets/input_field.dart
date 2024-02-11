@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: non_constant_identifier_names
@@ -8,25 +7,23 @@ Widget InputField({
   required TextEditingController controller,
   Map<String, dynamic>? args,
 }) {
-
-  final keyBoardType = args?['keyboardType'] as TextInputType? ?? TextInputType.text;
+  final keyBoardType =
+      args?['keyboardType'] as TextInputType? ?? TextInputType.text;
   final alignment = args?['alignment'] as TextAlign? ?? TextAlign.start;
   final isObscure = args?['isObscure'] as bool? ?? false;
   final Icon? prefixIcon = args?['prefixIcon'] as Icon?;
   final hintSize = args?['hintSize'] as double? ?? 20;
   final hintWeight = args?['hintWeight'] as FontWeight? ?? FontWeight.w500;
   return TextField(
-
     controller: controller,
     textAlign: alignment,
     decoration: InputDecoration(
       prefixIcon: prefixIcon,
       hintText: hintText,
-      hintStyle:  GoogleFonts.poppins(
+      hintStyle: GoogleFonts.poppins(
         color: Colors.black,
         fontSize: hintSize,
         fontWeight: hintWeight,
-        
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -34,6 +31,5 @@ Widget InputField({
     ),
     keyboardType: keyBoardType,
     obscureText: isObscure,
-
   );
 }

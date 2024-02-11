@@ -25,9 +25,6 @@ class _HomePageState extends State {
     Center(
       child: Text("Contact"),
     ),
-    Center(
-      child: Text("Settings"),
-    ),
   ];
 
   _changeTab(int index) {
@@ -39,6 +36,7 @@ class _HomePageState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         shadowColor: Colors.blue,
         leading: const Padding(
@@ -49,7 +47,7 @@ class _HomePageState extends State {
           ),
         ),
         title: Text(
-          "CabPool",
+          getTitle(_selectedTab),
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontWeight: FontWeight.w500,
@@ -77,5 +75,18 @@ class _HomePageState extends State {
         ],
       ),
     );
+  }
+
+  String getTitle(int index) {
+    switch (index) {
+      case 0:
+        return "CabPool";
+      case 1:
+        return "Notifications";
+      case 2:
+        return "Bookings";
+      default:
+        return "Profile";
+    }
   }
 }
