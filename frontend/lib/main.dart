@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swift_street/Views/cab_pooling.dart';
 import 'package:swift_street/Views/home_page.dart';
+import 'package:swift_street/constants/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,9 +12,10 @@ void main() {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       home: const HomePage(),
-      routes: const {
-        // routes will be added here
+      routes:  {
+          cabPoolingHome :(context) => const CabPoolingPage(),
       }));
 }
 

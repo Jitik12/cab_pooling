@@ -4,6 +4,7 @@ import 'package:swift_street/Widgets/bookings_card.dart';
 import 'package:swift_street/Widgets/feature_card.dart';
 import 'package:swift_street/Widgets/input_field.dart';
 import 'package:swift_street/Widgets/place_card.dart';
+import 'package:swift_street/constants/routes.dart';
 
 class HomeSection extends StatefulWidget {
   const HomeSection({super.key});
@@ -80,11 +81,16 @@ class _HomeSectionState extends State<HomeSection> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              getFeatureCard(
-                width: (screenWidth - 40) / 2,
-                text: 'Trip Pooling',
-                imagePath: 'assets/images/home_section/tesla_left.png',
-                alignment: MainAxisAlignment.end,
+              InkWell(
+                child: getFeatureCard(
+                  width: (screenWidth - 40) / 2,
+                  text: 'Trip Pooling',
+                  imagePath: 'assets/images/home_section/tesla_left.png',
+                  alignment: MainAxisAlignment.end,
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(cabPoolingHome);
+                },
               ),
               getFeatureCard(
                 width: (screenWidth - 40) / 2,
