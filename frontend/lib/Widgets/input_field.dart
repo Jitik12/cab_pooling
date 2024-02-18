@@ -14,6 +14,8 @@ Widget InputField({
   final Icon? prefixIcon = args?['prefixIcon'] as Icon?;
   final hintSize = args?['hintSize'] as double? ?? 20;
   final hintWeight = args?['hintWeight'] as FontWeight? ?? FontWeight.w500;
+
+  final contentPadding = args?['contentPadding'] as EdgeInsets? ;
   return TextField(
     controller: controller,
     textAlign: alignment,
@@ -25,6 +27,7 @@ Widget InputField({
         fontSize: hintSize,
         fontWeight: hintWeight,
       ),
+      contentPadding: contentPadding,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
       ),
