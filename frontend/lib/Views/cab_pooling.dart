@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/Widgets/iconedButton.dart';
 import 'package:swift_street/Widgets/input_field.dart';
 
 class CabPoolingPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
       startController; // Declare the TextEditingController
   late final TextEditingController
       destinationController; // Declare the TextEditingController
-  double _sheetPosition = 0.8;
+  double _sheetPosition = 0.4;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           const Image(
@@ -82,108 +84,123 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
             ),
           ),
           DraggableScrollableSheet(
+            initialChildSize: _sheetPosition,
             builder: (context, scrollController) {
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Grabber(
-                      onVerticalDragUpdate: (details) {
-                        double dy = details.delta.dy;
-                        print(dy);
-                        setState(() {
-                          _sheetPosition -= dy / screenHeight;
-                          if (_sheetPosition < 0.8) {
-                            _sheetPosition = 0.8;
-                          }
-                          if (_sheetPosition > 1) {
-                            _sheetPosition = 1;
-                          }
-                        });
-                      },
+              return GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  double dy = details.delta.dy;
+
+                  setState(() {
+                    if (dy > 0) {
+                      _sheetPosition = 0.4;
+                    } else {
+                      _sheetPosition = 0.8;
+                    }
+                  });
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
                     ),
-                    Flexible(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Choose your destination',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      const Grabber(),
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Choose your destination',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.location_searching,
-                                    color: Colors.black, size: 20.0),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: screenWidth - 54,
-                                  height: 50,
-                                  child: InputField(
-                                    hintText: 'Start',
-                                    controller: startController,
-                                    args: {
-                                      'keyboardType':
-                                          TextInputType.streetAddress,
-                                      'contentPadding':
-                                          const EdgeInsets.all(10.0),
-                                      'alignment': TextAlign.start,
-                                      'hintSize': 18.0,
-                                    },
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.location_searching,
+                                      color: Colors.black, size: 20.0),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: screenWidth - 54,
+                                    height: 50,
+                                    child: InputField(
+                                      hintText: 'Start',
+                                      controller: startController,
+                                      args: {
+                                        'keyboardType':
+                                            TextInputType.streetAddress,
+                                        'contentPadding':
+                                            const EdgeInsets.all(10.0),
+                                        'alignment': TextAlign.start,
+                                        'hintSize': 18.0,
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.location_on,
+                                      color: Colors.black, size: 20.0),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: screenWidth - 54,
+                                    height: 50,
+                                    child: InputField(
+                                      hintText: 'Destination',
+                                      controller: destinationController,
+                                      args: {
+                                        'keyboardType':
+                                            TextInputType.streetAddress,
+                                        'contentPadding':
+                                            const EdgeInsets.all(10.0),
+                                        'alignment': TextAlign.start,
+                                        'hintSize': 18.0,
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  iconedButton(
+                                    prefixIcon: Icons.timer,
+                                    text: '11:15 AM',
+                                    suffixIcon: Icons.arrow_drop_down,
+                                    onPressed: () {},
                                   ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.location_on,
-                                    color: Colors.black, size: 20.0),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: screenWidth - 54,
-                                  height: 50,
-                                  child: InputField(
-                                    hintText: 'Destination',
-                                    controller: startController,
-                                    args: {
-                                      'keyboardType':
-                                          TextInputType.streetAddress,
-                                      'contentPadding':
-                                          const EdgeInsets.all(10.0),
-                                      'alignment': TextAlign.start,
-                                      'hintSize': 18.0,
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              
-                            ),
-                            
-                          ],
+                                  iconedButton(
+                                    prefixIcon: Icons.date_range,
+                                    text: '22 Jan, 2024',
+                                    suffixIcon: Icons.arrow_drop_down,
+                                    onPressed: () {},
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -195,17 +212,11 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
 }
 
 class Grabber extends StatelessWidget {
-  const Grabber({
-    super.key,
-    required this.onVerticalDragUpdate,
-  });
-
-  final ValueChanged<DragUpdateDetails> onVerticalDragUpdate;
+  const Grabber({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onVerticalDragUpdate: onVerticalDragUpdate,
       child: Container(
         width: double.infinity,
         child: Align(
