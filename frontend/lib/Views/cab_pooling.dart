@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Widgets/iconedButton.dart';
 import 'package:swift_street/Widgets/input_field.dart';
+import 'package:swift_street/enums/time_slot.dart';
 
 class CabPoolingPage extends StatefulWidget {
   const CabPoolingPage({super.key});
@@ -15,7 +16,9 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
       startController; // Declare the TextEditingController
   late final TextEditingController
       destinationController; // Declare the TextEditingController
-  double _sheetPosition = 0.4;
+  double _sheetPosition = 0.5;
+  double sheetPadding = 16;
+  int num_people = 1;
 
   @override
   void initState() {
@@ -86,121 +89,119 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
           DraggableScrollableSheet(
             initialChildSize: _sheetPosition,
             builder: (context, scrollController) {
-              return GestureDetector(
-                onVerticalDragUpdate: (details) {
-                  double dy = details.delta.dy;
-
-                  setState(() {
-                    if (dy > 0) {
-                      _sheetPosition = 0.4;
-                    } else {
-                      _sheetPosition = 0.8;
-                    }
-                  });
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
-                    ),
+              return Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      const Grabber(),
-                      Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Choose your destination',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 15),
-                              Row(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 10,
+                      offset: Offset(0, -5),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: sheetPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Grabber(),
+                            Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Icon(Icons.location_searching,
-                                      color: Colors.black, size: 20.0),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: screenWidth - 54,
-                                    height: 50,
-                                    child: InputField(
-                                      hintText: 'Start',
-                                      controller: startController,
-                                      args: {
-                                        'keyboardType':
-                                            TextInputType.streetAddress,
-                                        'contentPadding':
-                                            const EdgeInsets.all(10.0),
-                                        'alignment': TextAlign.start,
-                                        'hintSize': 18.0,
-                                      },
+                                  Text(
+                                    'Choose your destination',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.location_on,
-                                      color: Colors.black, size: 20.0),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: screenWidth - 54,
-                                    height: 50,
-                                    child: InputField(
-                                      hintText: 'Destination',
-                                      controller: destinationController,
-                                      args: {
-                                        'keyboardType':
-                                            TextInputType.streetAddress,
-                                        'contentPadding':
-                                            const EdgeInsets.all(10.0),
-                                        'alignment': TextAlign.start,
-                                        'hintSize': 18.0,
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  iconedButton(
-                                    prefixIcon: Icons.timer,
-                                    text: '11:15 AM',
-                                    suffixIcon: Icons.arrow_drop_down,
-                                    onPressed: () {},
                                   ),
                                   iconedButton(
-                                    prefixIcon: Icons.date_range,
-                                    text: '22 Jan, 2024',
+                                    prefixIcon: Icons.people_outline,
+                                    text: num_people.toString(),
                                     suffixIcon: Icons.arrow_drop_down,
                                     onPressed: () {},
                                   )
-                                ],
+                                ]),
+                            const SizedBox(height: 15),
+                            locationInput(
+                              hintText: 'Start',
+                              controller: startController,
+                              width: screenWidth - 2 * sheetPadding - 30,
+                              icon: Icons.location_searching,
+                            ),
+                            const SizedBox(height: 10),
+                            locationInput(
+                              hintText: 'Destination',
+                              controller: destinationController,
+                              width: screenWidth - 2 * sheetPadding - 30,
+                              icon: Icons.location_on,
+                            ),
+                            const SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                iconedButton(
+                                  prefixIcon: Icons.timer,
+                                  text: '11:15 AM',
+                                  suffixIcon: Icons.arrow_drop_down,
+                                  onPressed: () {},
+                                ),
+                                iconedButton(
+                                  prefixIcon: Icons.date_range,
+                                  text: '22 Jan, 2024',
+                                  suffixIcon: Icons.arrow_drop_down,
+                                  onPressed: () {},
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(children: [
+                              TextPrefixedButton(
+                                text: 'Time Slot',
+                                enumValue: TimeSlot.hour_1,
+                                onPressed: () {},
+                                icon: Icons.arrow_drop_down,
                               ),
-                            ],
-                          ),
+                              const SizedBox(width: 16),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  'See how Slot works',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              )
+                            ]),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(children: [
+                              TextPrefixedButton(
+                                text: 'Number of People to Pool',
+                                enumValue: TimeSlot.hour_1,
+                                onPressed: () {},
+                                icon: Icons.arrow_drop_down,
+                              ),
+                            ])
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },
@@ -216,18 +217,109 @@ class Grabber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Container(
+      width: double.infinity,
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 15.0),
+          width: 36.0,
+          height: 6.0,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget locationInput({
+  required String hintText,
+  required TextEditingController controller,
+  required double width,
+  required IconData icon,
+}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Icon(
+        icon,
+        color: Colors.black,
+        size: 20.0,
+      ),
+      const SizedBox(width: 10),
+      SizedBox(
+        width: width,
+        height: 50,
+        child: InputField(
+          hintText: hintText,
+          controller: controller,
+          args: {
+            'keyboardType': TextInputType.streetAddress,
+            'contentPadding': const EdgeInsets.all(10.0),
+            'alignment': TextAlign.start,
+            'hintSize': 18.0,
+          },
+        ),
+      )
+    ],
+  );
+}
+
+class TextPrefixedButton<E> extends StatelessWidget {
+  final String text;
+  final TimeSlot enumValue;
+  final Function() onPressed;
+  final IconData icon;
+  const TextPrefixedButton(
+      {super.key,
+      required this.text,
+      required this.enumValue,
+      required this.onPressed,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
       child: Container(
-        width: double.infinity,
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 15.0),
-            width: 36.0,
-            height: 6.0,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(color: Colors.black54),
+        ),
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  text,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                Text(
+                  enumValue.name.toString().split('.').last,
+                  style: GoogleFonts.poppins(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8.0,
+                ),
+                const Icon(
+                  Icons.arrow_drop_down,
+                  size: 18,
+                ),
+              ],
             ),
           ),
         ),
