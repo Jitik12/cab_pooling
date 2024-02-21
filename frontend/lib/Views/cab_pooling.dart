@@ -120,188 +120,226 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
           ),
           DraggableScrollableSheet(
             initialChildSize: _sheetPosition,
+            minChildSize: 0.05,
+            maxChildSize: 0.6,
             builder: (context, scrollController) {
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 10,
-                      offset: Offset(0, -5),
+              return GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  double dy = details.delta.dy;
+                  print(dy);
+                  setState(() {
+                    if (_sheetPosition - dy / screenHeight > 0.05 &&
+                        _sheetPosition - dy / screenHeight < 0.6) {
+                      _sheetPosition -= dy / screenHeight;
+                    }
+                  });
+                },
+                onVerticalDragEnd: (details) {
+                  double velocity = details.primaryVelocity!;
+                  if (velocity > 0) {
+                    setState(() {
+                      _sheetPosition = 0.05;
+                    });
+                  } else {
+                    setState(() {
+                      _sheetPosition = 0.6;
+                    });
+                  }
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
                     ),
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Flexible(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: sheetPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Grabber(),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Choose your destination',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        offset: Offset(0, -5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      const Grabber(),
+                      Flexible(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: sheetPadding),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Choose your destination',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      iconedButton(
+                                        prefixIcon: Icons.people_outline,
+                                        text: num_people.value,
+                                        suffixIcon: Icons.arrow_drop_down,
+                                        onPressed: () {},
+                                      )
+                                    ]),
+                                const SizedBox(height: 15),
+                                locationInput(
+                                  hintText: 'Start',
+                                  controller: startController,
+                                  width: screenWidth - 2 * sheetPadding - 30,
+                                  icon: Icons.location_searching,
+                                ),
+                                const SizedBox(height: 10),
+                                locationInput(
+                                  hintText: 'Destination',
+                                  controller: destinationController,
+                                  width: screenWidth - 2 * sheetPadding - 30,
+                                  icon: Icons.location_on,
+                                ),
+                                const SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    iconedButton(
+                                      prefixIcon: Icons.timer,
+                                      text:
+                                          "${time.hour}:${time.minute < 10 ? '0' : ''}${time.minute} ${time.period.index == 0 ? 'AM' : 'PM'}",
+                                      onPressed: () async {
+                                        time = await selectTime(context);
+                                        setState(() {
+                                          time = time;
+                                        });
+                                      },
                                     ),
-                                  ),
-                                  iconedButton(
-                                    prefixIcon: Icons.people_outline,
-                                    text: num_people.value,
-                                    suffixIcon: Icons.arrow_drop_down,
+                                    iconedButton(
+                                      prefixIcon: Icons.date_range,
+                                      text: DateFormat('dd/MM/yyyy')
+                                          .format(date)
+                                          .toString(), // 22 jan 2024
+                                      onPressed: () async {
+                                        date = await selectDate();
+                                        setState(() {
+                                          date = date;
+                                        });
+                                      },
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(children: [
+                                  TextPrefixedButton(
+                                    text: 'Time Slot',
+                                    value: TimeSlot.hour_1.value,
                                     onPressed: () {},
+                                    icon: Icons.arrow_drop_down,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      'See how Slot works',
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   )
                                 ]),
-                            const SizedBox(height: 15),
-                            locationInput(
-                              hintText: 'Start',
-                              controller: startController,
-                              width: screenWidth - 2 * sheetPadding - 30,
-                              icon: Icons.location_searching,
-                            ),
-                            const SizedBox(height: 10),
-                            locationInput(
-                              hintText: 'Destination',
-                              controller: destinationController,
-                              width: screenWidth - 2 * sheetPadding - 30,
-                              icon: Icons.location_on,
-                            ),
-                            const SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                iconedButton(
-                                  prefixIcon: Icons.timer,
-                                  text:
-                                      "${time.hour}:${time.minute < 10 ? '0' : ''}${time.minute} ${time.period.index == 0 ? 'AM' : 'PM'}",
-                                  onPressed: () async {
-                                    time = await selectTime(context);
-                                    setState(() {
-                                      time = time;
-                                    });
-                                  },
+                                const SizedBox(
+                                  height: 15,
                                 ),
-                                iconedButton(
-                                  prefixIcon: Icons.date_range,
-                                  text: DateFormat('dd/MM/yyyy')
-                                      .format(date)
-                                      .toString(), // 22 jan 2024
-                                  onPressed: () async {
-                                    date = await selectDate();
-                                    setState(() {
-                                      date = date;
-                                    });
-                                  },
-                                )
+                                TextPrefixedButton(
+                                  text: 'Number of People to Pool',
+                                  value: NumPeople.one.value,
+                                  onPressed: () {},
+                                  icon: Icons.arrow_drop_down,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                    'The number of people can change at the time of ride',
+                                    style: GoogleFonts.poppins(
+                                      color: const Color.fromARGB(
+                                          255, 176, 171, 171),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                                const SizedBox(height: 10),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+
+                                      // TODO fix required for time checker
+                                      int totalTime =
+                                          date.millisecondsSinceEpoch +
+                                              time.hour * 60 * 60 * 1000 +
+                                              time.minute * 60 * 1000 +
+                                              (time.period.index == 0
+                                                  ? 0
+                                                  : 12 * 60 * 60 * 1000) ;
+
+                                      int currentTime =
+                                          DateTime.now().millisecondsSinceEpoch;
+
+                                      if (totalTime < currentTime) {
+                                        await showOkDialog(
+                                          context: context,
+                                          title: 'Invalid Time',
+                                          content:
+                                              'Please select a time in the future',
+                                        );
+                                        return;
+                                      }
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        const Color.fromARGB(255, 18, 209, 142),
+                                      ),
+                                      padding: MaterialStateProperty.all(
+                                        const EdgeInsets.symmetric(
+                                          horizontal: 40,
+                                          vertical: 15,
+                                        ),
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Book the Ride',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(children: [
-                              TextPrefixedButton(
-                                text: 'Time Slot',
-                                value: TimeSlot.hour_1.value,
-                                onPressed: () {},
-                                icon: Icons.arrow_drop_down,
-                              ),
-                              const SizedBox(width: 16),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Text(
-                                  'See how Slot works',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.black54,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              )
-                            ]),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            TextPrefixedButton(
-                              text: 'Number of People to Pool',
-                              value: NumPeople.one.value,
-                              onPressed: () {},
-                              icon: Icons.arrow_drop_down,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                                'The number of people can change at the time of ride',
-                                style: GoogleFonts.poppins(
-                                  color:
-                                      const Color.fromARGB(255, 176, 171, 171),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            const SizedBox(height: 10),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  int totalTime = date.millisecondsSinceEpoch +
-                                      time.hour * 60 * 60 * 1000 +
-                                      time.minute * 60 * 1000;
-
-                                  int currentTime =
-                                      DateTime.now().millisecondsSinceEpoch;
-
-                                  if (totalTime < currentTime) {
-                                    await showOkDialog(
-                                      context: context,
-                                      title: 'Invalid Time',
-                                      content:
-                                          'Please select a time in the future',
-                                    );
-                                    return;
-                                  }
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 18, 209, 142),
-                                  ),
-                                  padding: MaterialStateProperty.all(
-                                    const EdgeInsets.symmetric(
-                                      horizontal: 40,
-                                      vertical: 15,
-                                    ),
-                                  ),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'Book the Ride',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
