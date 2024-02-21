@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/Widgets/dialog/ok_dialog.dart';
+import 'package:swift_street/Widgets/grabber.dart';
 import 'package:swift_street/Widgets/iconedButton.dart';
-import 'package:swift_street/Widgets/input_field.dart';
+import 'package:swift_street/Widgets/location_input.dart';
+import 'package:swift_street/Widgets/text_prefixed_button.dart';
+import 'package:swift_street/enums/num_people.dart';
 import 'package:swift_street/enums/time_slot.dart';
+import 'package:intl/intl.dart';
 
 class CabPoolingPage extends StatefulWidget {
   const CabPoolingPage({super.key});
@@ -16,10 +21,13 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
       startController; // Declare the TextEditingController
   late final TextEditingController
       destinationController; // Declare the TextEditingController
-  double _sheetPosition = 0.5;
+  double _sheetPosition = 0.6;
   double sheetPadding = 16;
-  int num_people = 1;
+  TimeSlot timeSlot = TimeSlot.hour_1;
+  NumPeople num_people = NumPeople.one;
 
+  TimeOfDay time = TimeOfDay.now();
+  DateTime date = DateTime.now();
   @override
   void initState() {
     super.initState();
@@ -34,6 +42,41 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
         .dispose(); // Dispose the TextEditingController when not needed
     destinationController.dispose();
     super.dispose();
+  }
+
+  Future<DateTime> selectDate() async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        //DateTime.now() - not to allow to choose before today.
+        lastDate: DateTime(2025));
+
+    if (pickedDate != null) {
+      return pickedDate;
+    }
+
+    return date;
+  }
+
+  Future<TimeOfDay> selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      errorInvalidText: '12 hour format',
+      initialTime: time,
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      return picked;
+    }
+    return time;
   }
 
   @override
@@ -68,23 +111,12 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
               ),
             ),
           ),
-          Positioned(
-            top: screenHeight / 3,
-            right: screenWidth / 20,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.my_location_rounded,
-                color: Colors.black,
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
-                  const CircleBorder(),
-                ),
-                maximumSize: MaterialStateProperty.all(const Size(40, 40)),
-              ),
-            ),
+          FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Colors.white,
+            mini: true,
+            child: const Icon(Icons.my_location_rounded,
+                color: Colors.black, size: 20),
           ),
           DraggableScrollableSheet(
             initialChildSize: _sheetPosition,
@@ -126,7 +158,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                   ),
                                   iconedButton(
                                     prefixIcon: Icons.people_outline,
-                                    text: num_people.toString(),
+                                    text: num_people.value,
                                     suffixIcon: Icons.arrow_drop_down,
                                     onPressed: () {},
                                   )
@@ -151,15 +183,26 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                               children: [
                                 iconedButton(
                                   prefixIcon: Icons.timer,
-                                  text: '11:15 AM',
-                                  suffixIcon: Icons.arrow_drop_down,
-                                  onPressed: () {},
+                                  text:
+                                      "${time.hour}:${time.minute < 10 ? '0' : ''}${time.minute} ${time.period.index == 0 ? 'AM' : 'PM'}",
+                                  onPressed: () async {
+                                    time = await selectTime(context);
+                                    setState(() {
+                                      time = time;
+                                    });
+                                  },
                                 ),
                                 iconedButton(
                                   prefixIcon: Icons.date_range,
-                                  text: '22 Jan, 2024',
-                                  suffixIcon: Icons.arrow_drop_down,
-                                  onPressed: () {},
+                                  text: DateFormat('dd/MM/yyyy')
+                                      .format(date)
+                                      .toString(), // 22 jan 2024
+                                  onPressed: () async {
+                                    date = await selectDate();
+                                    setState(() {
+                                      date = date;
+                                    });
+                                  },
                                 )
                               ],
                             ),
@@ -169,7 +212,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                             Row(children: [
                               TextPrefixedButton(
                                 text: 'Time Slot',
-                                enumValue: TimeSlot.hour_1,
+                                value: TimeSlot.hour_1.value,
                                 onPressed: () {},
                                 icon: Icons.arrow_drop_down,
                               ),
@@ -179,7 +222,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                 child: Text(
                                   'See how Slot works',
                                   style: GoogleFonts.poppins(
-                                    color: Colors.grey,
+                                    color: Colors.black54,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -189,14 +232,71 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                             const SizedBox(
                               height: 15,
                             ),
-                            Row(children: [
-                              TextPrefixedButton(
-                                text: 'Number of People to Pool',
-                                enumValue: TimeSlot.hour_1,
-                                onPressed: () {},
-                                icon: Icons.arrow_drop_down,
+                            TextPrefixedButton(
+                              text: 'Number of People to Pool',
+                              value: NumPeople.one.value,
+                              onPressed: () {},
+                              icon: Icons.arrow_drop_down,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                                'The number of people can change at the time of ride',
+                                style: GoogleFonts.poppins(
+                                  color:
+                                      const Color.fromARGB(255, 176, 171, 171),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  int totalTime = date.millisecondsSinceEpoch +
+                                      time.hour * 60 * 60 * 1000 +
+                                      time.minute * 60 * 1000;
+
+                                  int currentTime =
+                                      DateTime.now().millisecondsSinceEpoch;
+
+                                  if (totalTime < currentTime) {
+                                    await showOkDialog(
+                                      context: context,
+                                      title: 'Invalid Time',
+                                      content:
+                                          'Please select a time in the future',
+                                    );
+                                    return;
+                                  }
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromARGB(255, 18, 209, 142),
+                                  ),
+                                  padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(
+                                      horizontal: 40,
+                                      vertical: 15,
+                                    ),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Book the Ride',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               ),
-                            ])
+                            ),
                           ],
                         ),
                       ),
@@ -207,122 +307,6 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class Grabber extends StatelessWidget {
-  const Grabber({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 15.0),
-          width: 36.0,
-          height: 6.0,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-Widget locationInput({
-  required String hintText,
-  required TextEditingController controller,
-  required double width,
-  required IconData icon,
-}) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Icon(
-        icon,
-        color: Colors.black,
-        size: 20.0,
-      ),
-      const SizedBox(width: 10),
-      SizedBox(
-        width: width,
-        height: 50,
-        child: InputField(
-          hintText: hintText,
-          controller: controller,
-          args: {
-            'keyboardType': TextInputType.streetAddress,
-            'contentPadding': const EdgeInsets.all(10.0),
-            'alignment': TextAlign.start,
-            'hintSize': 18.0,
-          },
-        ),
-      )
-    ],
-  );
-}
-
-class TextPrefixedButton<E> extends StatelessWidget {
-  final String text;
-  final TimeSlot enumValue;
-  final Function() onPressed;
-  final IconData icon;
-  const TextPrefixedButton(
-      {super.key,
-      required this.text,
-      required this.enumValue,
-      required this.onPressed,
-      required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return IntrinsicWidth(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: Colors.black54),
-        ),
-        child: InkWell(
-          onTap: onPressed,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  text,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-                Text(
-                  enumValue.name.toString().split('.').last,
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(
-                  width: 8.0,
-                ),
-                const Icon(
-                  Icons.arrow_drop_down,
-                  size: 18,
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

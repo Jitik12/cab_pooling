@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 Widget iconedButton({
-  required IconData prefixIcon,
+  IconData? prefixIcon,
   required String text,
-  required IconData suffixIcon,
+  IconData? suffixIcon,
   required Function() onPressed,
 }) {
   return Container(
@@ -19,7 +19,8 @@ Widget iconedButton({
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(prefixIcon, size: 18),
+            // show only if prefixIcon is not null
+            if (prefixIcon != null) Icon(prefixIcon, size: 18),
             const SizedBox(width: 10.0),
             Text(
               text,
@@ -29,7 +30,7 @@ Widget iconedButton({
               ),
             ),
             const SizedBox(width: 6.0),
-            Icon(suffixIcon),
+            if (suffixIcon != null) Icon(suffixIcon),
           ],
         ),
       ),

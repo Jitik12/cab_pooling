@@ -1,20 +1,22 @@
-enum TimeSlot<String> {
+enum TimeSlot {
   hourHalf,
   hour_1,
-  hour_2,
-}
+  hour_2;
 
+  
+}
 extension TimeSlotExtension on TimeSlot {
-  String get name {
+  String get value {
     switch (this) {
       case TimeSlot.hourHalf:
-        return '1/2 hour';
+        return '30 minutes';
       case TimeSlot.hour_1:
         return '1 hour';
       case TimeSlot.hour_2:
-        return '2 Hour';
+        return '2 hours';
       default:
         return '';
     }
   }
 }
+

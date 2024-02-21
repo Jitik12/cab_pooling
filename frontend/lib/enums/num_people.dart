@@ -1,23 +1,23 @@
-enum NumPeople<int> {
+enum NumPeople {
   one,
   two,
   three,
-  four,
+  four;
 }
 
 extension NumPeopleExtension on NumPeople {
-  int get value {
+  String get value {
     switch (this) {
       case NumPeople.one:
-        return 1;
+        return '1';
       case NumPeople.two:
-        return 2;
+        return '2';
       case NumPeople.three:
-        return 3;
+        return '3';
       case NumPeople.four:
-        return 4;
+        return '4';
       default:
-        return 0;
+        return '';
     }
   }
 }
