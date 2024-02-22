@@ -4,7 +4,7 @@ import 'package:swift_street/Widgets/dialog/ok_dialog.dart';
 import 'package:swift_street/Widgets/grabber.dart';
 import 'package:swift_street/Widgets/iconedButton.dart';
 import 'package:swift_street/Widgets/location_input.dart';
-import 'package:swift_street/Widgets/text_prefixed_button.dart';
+import 'package:swift_street/Widgets/customized_popup_menu.dart';
 import 'package:swift_street/enums/num_people.dart';
 import 'package:swift_street/enums/time_slot.dart';
 import 'package:intl/intl.dart';
@@ -21,13 +21,15 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
       startController; // Declare the TextEditingController
   late final TextEditingController
       destinationController; // Declare the TextEditingController
+
   double _sheetPosition = 0.6;
   double sheetPadding = 16;
   TimeSlot timeSlot = TimeSlot.hour_1;
-  NumPeople num_people = NumPeople.one;
-
+  NumPeople numpeople = NumPeople.one;
+  NumPeople num1 = NumPeople.one;
   TimeOfDay time = TimeOfDay.now();
   DateTime date = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -126,7 +128,6 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
               return GestureDetector(
                 onVerticalDragUpdate: (details) {
                   double dy = details.delta.dy;
-                  print(dy);
                   setState(() {
                     if (_sheetPosition - dy / screenHeight > 0.05 &&
                         _sheetPosition - dy / screenHeight < 0.6) {
@@ -135,8 +136,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                   });
                 },
                 onVerticalDragEnd: (details) {
-                  double velocity = details.primaryVelocity!;
-                  if (velocity > 0) {
+                  if (_sheetPosition < 0.325) {
                     setState(() {
                       _sheetPosition = 0.05;
                     });
@@ -183,12 +183,17 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      iconedButton(
-                                        prefixIcon: Icons.people_outline,
-                                        text: num_people.value,
-                                        suffixIcon: Icons.arrow_drop_down,
-                                        onPressed: () {},
-                                      )
+                                      CustomizedPopUpMenu<NumPeople>(
+                                        prefixIcon: Icons.people,
+                                        value: num1,
+                                        options: NumPeople.values,
+                                        onOptionSelected: (value) {
+                                          setState(() {
+                                            num1 = value;
+                                          });
+                                        },
+                                        getLabel: (value) => value.value,
+                                      ),
                                     ]),
                                 const SizedBox(height: 15),
                                 locationInput(
@@ -238,11 +243,16 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                   height: 15,
                                 ),
                                 Row(children: [
-                                  TextPrefixedButton(
+                                  CustomizedPopUpMenu<TimeSlot>(
                                     text: 'Time Slot',
-                                    value: TimeSlot.hour_1.value,
-                                    onPressed: () {},
-                                    icon: Icons.arrow_drop_down,
+                                    value: timeSlot,
+                                    options: TimeSlot.values,
+                                    onOptionSelected: (value) {
+                                      setState(() {
+                                        timeSlot = value;
+                                      });
+                                    },
+                                    getLabel: (value) => value.value,
                                   ),
                                   const SizedBox(width: 16),
                                   Padding(
@@ -260,11 +270,16 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                TextPrefixedButton(
-                                  text: 'Number of People to Pool',
-                                  value: NumPeople.one.value,
-                                  onPressed: () {},
-                                  icon: Icons.arrow_drop_down,
+                                CustomizedPopUpMenu<NumPeople>(
+                                  text: 'Number of people to pool',
+                                  value: numpeople,
+                                  options: NumPeople.values,
+                                  onOptionSelected: (value) {
+                                    setState(() {
+                                      numpeople = value;
+                                    });
+                                  },
+                                  getLabel: (value) => value.value,
                                 ),
                                 const SizedBox(
                                   height: 15,
@@ -282,7 +297,6 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () async {
-
                                       // TODO fix required for time checker
                                       int totalTime =
                                           date.millisecondsSinceEpoch +
@@ -290,7 +304,7 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
                                               time.minute * 60 * 1000 +
                                               (time.period.index == 0
                                                   ? 0
-                                                  : 12 * 60 * 60 * 1000) ;
+                                                  : 12 * 60 * 60 * 1000);
 
                                       int currentTime =
                                           DateTime.now().millisecondsSinceEpoch;

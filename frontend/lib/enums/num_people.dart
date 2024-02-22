@@ -1,23 +1,12 @@
 enum NumPeople {
-  one,
-  two,
-  three,
-  four;
-}
+  one(1),
+  two(2),
+  three(3),
+  four(4);
 
-extension NumPeopleExtension on NumPeople {
-  String get value {
-    switch (this) {
-      case NumPeople.one:
-        return '1';
-      case NumPeople.two:
-        return '2';
-      case NumPeople.three:
-        return '3';
-      case NumPeople.four:
-        return '4';
-      default:
-        return '';
-    }
-  }
+  final int label;
+
+  const NumPeople(this.label);
+
+  String get value => label.toString();
 }

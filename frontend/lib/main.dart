@@ -14,8 +14,8 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
-      routes:  {
-          cabPoolingHome :(context) => const CabPoolingPage(),
+      routes: {
+        cabPoolingHome: (context) => const CabPoolingPage(),
       }));
 }
 
