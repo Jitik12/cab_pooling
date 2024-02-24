@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Views/home_section.dart';
+import 'package:swift_street/Views/User_interface/bookings_section.dart';
+import 'package:swift_street/Views/User_interface/home_section.dart';
+import 'package:swift_street/Views/User_interface/notification_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,10 +19,10 @@ class _HomePageState extends State {
       child: HomeSection(),
     ),
     Center(
-      child: Text("About"),
+      child: NotificationSection(),
     ),
     Center(
-      child: Text("Products"),
+      child: BookingSection(),
     ),
     Center(
       child: Text("Contact"),

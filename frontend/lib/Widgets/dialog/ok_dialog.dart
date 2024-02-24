@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swift_street/utilities/dialogs/generic_dialog.dart';
+import 'package:swift_street/Widgets/dialog/generic_dialog.dart';
 
 Future<void> showOkDialog({
   required BuildContext context,
