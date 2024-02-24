@@ -92,13 +92,17 @@ class _HomeSectionState extends State<HomeSection> {
                   Navigator.of(context).pushNamed(cabPoolingHome);
                 },
               ),
-              getFeatureCard(
-                width: (screenWidth - 40) / 2,
-                text: 'Instant Cabs',
-                imagePath: 'assets/images/home_section/tesla_right.png',
-                alignment: MainAxisAlignment.start,
-                icon: 'assets/images/home_section/24_7.png',
-              ),
+              InkWell(
+                  child: getFeatureCard(
+                    width: (screenWidth - 40) / 2,
+                    text: 'Instant Cabs',
+                    imagePath: 'assets/images/home_section/tesla_right.png',
+                    alignment: MainAxisAlignment.start,
+                    icon: 'assets/images/home_section/24_7.png',
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(instantCabHome);
+                  }),
             ],
           ),
           const SizedBox(height: 20),

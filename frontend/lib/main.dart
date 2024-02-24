@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swift_street/Views/User_interface/cab_pooling.dart';
 import 'package:swift_street/Views/User_interface/home_page.dart';
+import 'package:swift_street/Views/User_interface/instant_cabs.dart';
 import 'package:swift_street/constants/routes.dart';
 
 void main() {
@@ -16,6 +17,7 @@ void main() {
       home: const HomePage(),
       routes: {
         cabPoolingHome: (context) => const CabPoolingPage(),
+        instantCabHome: (context) => const InstantCabsHome()
       }));
 }
 

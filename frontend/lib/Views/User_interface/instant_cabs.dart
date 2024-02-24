@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/instant_cabs_page_one.dart';
+import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_page_one.dart';
 import 'package:swift_street/Widgets/bottom_sheet.dart';
 
-class CabPoolingPage extends StatefulWidget {
-  const CabPoolingPage({super.key});
+class InstantCabsHome extends StatefulWidget {
+  const InstantCabsHome({super.key});
 
   @override
-  State<CabPoolingPage> createState() => _CabPoolingPageState();
+  State<InstantCabsHome> createState() => _InstantCabsHomeState();
 }
 
-class _CabPoolingPageState extends State<CabPoolingPage> {
+class _InstantCabsHomeState extends State<InstantCabsHome> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -62,9 +62,9 @@ class _CabPoolingPageState extends State<CabPoolingPage> {
           ),
           ScrollableBottomSheet(
             minSheetSize: 36 / screenHeight,
-            maxSheetSize: 0.6,
+            maxSheetSize: 0.42,
             dragable: true,
-            child: CarPoolPageOne(
+            child: TripPoolPageOne(
               onPressed: () {},
             ),
           ),

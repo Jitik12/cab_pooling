@@ -21,7 +21,13 @@ class ScrollableBottomSheet extends StatefulWidget {
 }
 
 class _ScrollableBottomSheetState extends State<ScrollableBottomSheet> {
-  double sheetPosition = 0.6;
+  double sheetPosition = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    sheetPosition = widget.maxSheetSize;
+  }
 
   @override
   Widget build(BuildContext context) {
