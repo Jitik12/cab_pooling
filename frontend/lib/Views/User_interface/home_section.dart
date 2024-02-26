@@ -89,7 +89,7 @@ class _HomeSectionState extends State<HomeSection> {
                   alignment: MainAxisAlignment.end,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(cabPoolingHome);
+                  Navigator.of(context).pushNamed(tripPoolingHome);
                 },
               ),
               InkWell(
