@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/Widgets/green_button.dart';
 
 class InstantCabSuccessSheet extends StatelessWidget {
   const InstantCabSuccessSheet({super.key});
@@ -33,35 +34,8 @@ class InstantCabSuccessSheet extends StatelessWidget {
       const SizedBox(
         height: 20,
       ),
-      SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () async {},
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              const Color.fromARGB(255, 18, 209, 142),
-            ),
-            padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(
-                horizontal: 40,
-                vertical: 15,
-              ),
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40),
-              ),
-            ),
-          ),
-          child: const Text(
-            'Ride Details',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
+      GreenButton(onPressed: (){},
+      title: 'Ride Details',
       ),
     ]);
   }

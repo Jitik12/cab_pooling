@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/Widgets/green_button.dart';
 import 'package:swift_street/Widgets/review_row.dart';
 import 'package:swift_street/constants/routes.dart';
 
@@ -46,45 +47,18 @@ class InstantCabsReviewSheet extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () async {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, instantCabConfirmationPage, (route) {
-                print(route.settings.name);
-                if (route.settings.name == '/') {
-                  return true;
-                }
-                return false;
-              });
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 18, 209, 142),
-              ),
-              padding: MaterialStateProperty.all(
-                const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 15,
-                ),
-              ),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-            ),
-            child: const Text(
-              'Book the Ride',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
+        GreenButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, instantCabConfirmationPage, (route) {
+              if (route.settings.name == '/') {
+                return true;
+              }
+              return false;
+            });
+          },
+          title: 'Book Instant Cab',
+        )
       ],
     );
   }

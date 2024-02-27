@@ -4,4 +4,4 @@ const tripPoolingReviewPage = '/trip-pool/2';
 const instantCabReviewPage = '/instant-trip/2';
 const tripPoolConfirmationPage = '/trip-pool/3';
 const instantCabConfirmationPage = '/instant-trip/3';
-const home = '/home';
+const editProfile = '/edit-profile';

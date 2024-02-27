@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:swift_street/Widgets/customized_popup_menu.dart';
 import 'package:swift_street/Widgets/dialog/ok_dialog.dart';
+import 'package:swift_street/Widgets/green_button.dart';
 import 'package:swift_street/Widgets/iconedButton.dart';
 import 'package:swift_street/Widgets/location_input.dart';
 import 'package:swift_street/constants/routes.dart';
@@ -93,7 +94,6 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
                   "${cabPoolRequest.time.hour}:${cabPoolRequest.time.minute < 10 ? '0' : ''}${cabPoolRequest.time.minute} ${cabPoolRequest.time.period.index == 0 ? 'AM' : 'PM'}",
               onPressed: () async {
                 await selectTime(context);
-            
               },
             ),
             iconedButton(
@@ -159,54 +159,30 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
               fontWeight: FontWeight.w500,
             )),
         const SizedBox(height: 10),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () async {
-              int totalTime = cabPoolRequest.date.millisecondsSinceEpoch +
-                  cabPoolRequest.time.hour * 60 * 60 * 1000 +
-                  cabPoolRequest.time.minute * 60 * 1000 +
-                  (cabPoolRequest.time.period.index == 0 ? 0 : 12 * 60 * 60 * 1000);
+        GreenButton(
+          onPressed: () async {
+            int totalTime = cabPoolRequest.date.millisecondsSinceEpoch +
+                cabPoolRequest.time.hour * 60 * 60 * 1000 +
+                cabPoolRequest.time.minute * 60 * 1000 +
+                (cabPoolRequest.time.period.index == 0
+                    ? 0
+                    : 12 * 60 * 60 * 1000);
 
-              int currentTime = DateTime.now().millisecondsSinceEpoch;
+            int currentTime = DateTime.now().millisecondsSinceEpoch;
 
-              if (totalTime < currentTime) {
-                await showOkDialog(
-                  context: context,
-                  title: 'Invalid Time',
-                  content: 'Please select a time in the future',
-                );
-                return;
-              }
+            if (totalTime < currentTime) {
+              await showOkDialog(
+                context: context,
+                title: 'Invalid Time',
+                content: 'Please select a time in the future',
+              );
+              return;
+            }
 
-              Navigator.of(context).pushNamed(tripPoolingReviewPage);
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 18, 209, 142),
-              ),
-              padding: MaterialStateProperty.all(
-                const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 15,
-                ),
-              ),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-            ),
-            child: const Text(
-              'Book the Ride',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
+            Navigator.of(context).pushNamed(tripPoolingReviewPage);
+          },
+          title: 'Book the Ride',
+        )
       ],
     );
   }
@@ -222,7 +198,6 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
     if (pickedDate != null) {
       cabPoolRequest.date = pickedDate;
     }
-
   }
 
   Future<void> selectTime(BuildContext context) async {
@@ -240,8 +215,7 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
     );
 
     if (picked != null) {
-        cabPoolRequest.time = picked;
+      cabPoolRequest.time = picked;
     }
-
   }
 }

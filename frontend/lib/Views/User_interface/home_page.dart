@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Views/User_interface/bookings_section.dart';
 import 'package:swift_street/Views/User_interface/home_section.dart';
 import 'package:swift_street/Views/User_interface/notification_section.dart';
+import 'package:swift_street/Views/User_interface/user_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _HomePageState extends State {
       child: BookingSection(),
     ),
     Center(
-      child: Text("Contact"),
+      child: UserSection(),
     ),
   ];
 
@@ -67,13 +68,13 @@ class _HomePageState extends State {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_rounded), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.notifications), label: "Alert"),
           BottomNavigationBarItem(
               icon: Icon(Icons.confirmation_number), label: "Tickets"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
         ],
       ),
     );
@@ -88,7 +89,7 @@ class _HomePageState extends State {
       case 2:
         return "Bookings";
       default:
-        return "Profile";
+        return "Account";
     }
   }
 }

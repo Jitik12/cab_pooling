@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/Widgets/green_button.dart';
 
 class TripPoolSuccessSheet extends StatelessWidget {
   const TripPoolSuccessSheet({super.key});
@@ -22,61 +23,71 @@ class TripPoolSuccessSheet extends StatelessWidget {
         height: 22,
       ),
       Center(
-        child: Column(
-          children: [
-            Text(
-              'Your Ride has been booked!',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-
-             Text(
-              'Your Ride has been booked!',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+        child: Text(
+          'Your Ride has been booked!',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
       const SizedBox(
-        height: 20,
+        height: 5,
       ),
-      SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () async {},
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              const Color.fromARGB(255, 18, 209, 142),
-            ),
-            padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(
-                horizontal: 40,
-                vertical: 15,
-              ),
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40),
-              ),
-            ),
-          ),
-          child: const Text(
-            'Ride Details',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
+      Center(
+        child: Text(
+          'Disclaimer',
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
           ),
         ),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      Center(
+        child: Text(
+          '1. You will be notified of the pooling within 1 hr of departure.',
+          style: GoogleFonts.poppins(
+            fontSize: 11,
+            fontWeight: FontWeight.w400,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      Center(
+        child: Text(
+          '2. If pooling is not done, you might have to pay the full amount mentioned.',
+          style: GoogleFonts.poppins(
+            fontSize: 11,
+            fontWeight: FontWeight.w400,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      Center(
+        child: Text(
+          '3. If a driver could not be assigned, you  can contact your co-passengers and book your own ride',
+          style: GoogleFonts.poppins(
+            fontSize: 11,
+            fontWeight: FontWeight.w400,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      const SizedBox(
+        height: 40,
+      ),
+      GreenButton(
+        onPressed: () async {},
+        title: 'Ride Details',
       ),
     ]);
   }
