@@ -5,9 +5,11 @@ import 'package:swift_street/Views/User_interface/BottomSheets/instant_cabs_shee
 import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_review_sheet.dart';
 import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_sheet_one.dart';
 import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_succes_sheet.dart';
+import 'package:swift_street/Views/User_interface/edit_payment_details.dart';
 import 'package:swift_street/Views/User_interface/edit_profile.dart';
 import 'package:swift_street/Views/User_interface/map_page.dart';
 import 'package:swift_street/Views/User_interface/home_page.dart';
+import 'package:swift_street/Views/User_interface/payment_details.dart';
 import 'package:swift_street/constants/routes.dart';
 
 void main() {
@@ -47,5 +49,7 @@ void main() {
             dragable: true,
             maxSheetSize: 0.65),
         editProfile: (context)=> const EditProfilePage(),
+        paymentDetails: (context)=> const PaymentDetailsPage(),
+        editPayment: (context)=> const EditPaymentPage(),
       }));
 }

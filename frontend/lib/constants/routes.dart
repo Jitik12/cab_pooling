@@ -5,3 +5,5 @@ const instantCabReviewPage = '/instant-trip/2';
 const tripPoolConfirmationPage = '/trip-pool/3';
 const instantCabConfirmationPage = '/instant-trip/3';
 const editProfile = '/edit-profile';
+const paymentDetails = '/payment-details';
+const editPayment = '/edit-payment';

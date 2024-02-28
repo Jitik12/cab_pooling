@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/Widgets/bordered_listile.dart';
 import 'package:swift_street/constants/routes.dart';
 
 class UserSection extends StatefulWidget {
@@ -118,60 +119,25 @@ class _UserSectionState extends State<UserSection> {
         const SizedBox(
           height: 10,
         ),
-        ListTile(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(color: Colors.grey),
-          ),
-          leading: const Icon(Icons.currency_rupee_sharp,
+        BorderedListTile(
+          title: 'Payment',
+          subtitle: 'Change Your Payment Options',
+          leading: const Icon(Icons.currency_rupee_rounded,
               color: Color.fromARGB(255, 0, 65, 245), size: 35.0),
-          title: Text(
-            'Payment',
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          subtitle: Text(
-            'Change Your Payment Options',
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-            ),
-          ),
-          trailing: const Icon(
-            Icons.arrow_forward_rounded,
-            color: Colors.black,
-            size: 20,
-          ),
+          onTap: () {
+            Navigator.pushNamed(context, paymentDetails);
+          },
         ),
         const SizedBox(
           height: 10,
         ),
-        ListTile(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(color: Colors.grey),
-          ),
-          leading: const Icon(Icons.settings,
+        BorderedListTile(
+          title: 'Saved Addresses',
+          subtitle: 'Edit and change the Saved addresses',
+          leading: const Icon(Icons.settings_rounded,
               color: Color.fromARGB(255, 0, 65, 245), size: 35.0),
-          title: Text(
-            'Saved Addresses',
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          subtitle: Text(
-            'Edit and change the saved addresses',
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-            ),
-          ),
-          trailing: const Icon(
-            Icons.arrow_forward_rounded,
-            color: Colors.black,
-            size: 20,
-          ),
+              
+          onTap: (){}
         ),
       ],
     );

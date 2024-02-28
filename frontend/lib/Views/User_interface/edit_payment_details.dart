@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/bordered_listile.dart';
+import 'package:swift_street/Widgets/green_button.dart';
+import 'package:swift_street/Widgets/input_with_heading.dart';
 
-class PaymentDetailsPage extends StatefulWidget {
-  const PaymentDetailsPage({super.key});
+class EditPaymentPage extends StatefulWidget {
+  const EditPaymentPage({super.key});
 
   @override
-  State<PaymentDetailsPage> createState() => _PaymentDetailsPageState();
+  State<EditPaymentPage> createState() => _EditPaymentPageState();
 }
 
-class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
+class _EditPaymentPageState extends State<EditPaymentPage> {
+  late final TextEditingController detailController;
+
+  @override
+  void initState() {
+    super.initState();
+    detailController = TextEditingController(text: 'rajkumar@okicici');
+  }
+
+  @override
+  void dispose() {
+    detailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,34 +69,30 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
             ],
           ),
           const SizedBox(
-            height: 15,
+            height: 5,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BorderedListTile(
-                  title: 'GPay',
-                  subtitle: 'rajkumar@okicici',
-                  leading: Image.asset('assets/images/gpay.png'),
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/edit-payment');
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                BorderedListTile(
-                  title: 'Credit Card',
-                  subtitle: 'xxxx-xxxx-xxxx-1234',
-                  leading: Image.asset('assets/images/visa.png'),
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/edit-payment');
-                  },
-                ),
+                InputWithHeading(controller: detailController, name: 'GPay ID'),
               ],
             ),
           ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: GreenButton(
+                  onPressed: () {},
+                  bordeRadius: 20,
+                  title: 'Update',
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
