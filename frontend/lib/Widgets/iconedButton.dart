@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swift_street/constants/colors.dart';
 
 Widget iconedButton({
   IconData? prefixIcon,
@@ -10,7 +11,7 @@ Widget iconedButton({
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(40),
-      border: Border.all(color: Colors.black54),
+      border: Border.all(color: black54),
     ),
     child: InkWell(
       onTap: onPressed,

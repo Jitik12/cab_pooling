@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swift_street/Widgets/input_field.dart';
+import 'package:swift_street/constants/colors.dart';
 
 Widget locationInput({
   required String hintText,
@@ -13,7 +14,7 @@ Widget locationInput({
     children: [
       Icon(
         icon,
-        color: Colors.black,
+        color: blackColor,
         size: 20.0,
       ),
       const SizedBox(width: 10),

@@ -7,3 +7,4 @@ const instantCabConfirmationPage = '/instant-trip/3';
 const editProfile = '/edit-profile';
 const paymentDetails = '/payment-details';
 const editPayment = '/edit-payment';
+const rideDetails = '/ride-details';

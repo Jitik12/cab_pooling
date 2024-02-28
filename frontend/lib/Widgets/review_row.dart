@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/constants/colors.dart';
 
 Widget getReviewRow({required String name, required String value}) {
   return (Row(
@@ -18,7 +19,7 @@ Widget getReviewRow({required String name, required String value}) {
         style: GoogleFonts.poppins(
           fontSize: 18,
           fontWeight: FontWeight.w500,
-          color: Colors.black,
+          color: blackColor,
         ),
       ),
     ],

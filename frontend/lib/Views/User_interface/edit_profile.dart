@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Widgets/green_button.dart';
 import 'package:swift_street/Widgets/input_with_heading.dart';
+import 'package:swift_street/constants/colors.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -36,7 +37,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        shadowColor: Colors.blue,
+        shadowColor: blueColor,
         leading: const Padding(
           padding: EdgeInsets.only(left: 16.0),
           child: Image(
@@ -47,7 +48,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: Text(
           'Account',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: blackColor,
             fontWeight: FontWeight.w500,
             fontSize: 30,
           ),

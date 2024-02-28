@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Widgets/bordered_listile.dart';
+import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/constants/routes.dart';
 
 class UserSection extends StatefulWidget {
@@ -83,7 +84,7 @@ class _UserSectionState extends State<UserSection> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                        color: blackColor,
                       ),
                     ),
                   ],
@@ -107,7 +108,7 @@ class _UserSectionState extends State<UserSection> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                        color: blackColor,
                       ),
                     ),
                   ],
@@ -132,13 +133,11 @@ class _UserSectionState extends State<UserSection> {
           height: 10,
         ),
         BorderedListTile(
-          title: 'Saved Addresses',
-          subtitle: 'Edit and change the Saved addresses',
-          leading: const Icon(Icons.settings_rounded,
-              color: Color.fromARGB(255, 0, 65, 245), size: 35.0),
-              
-          onTap: (){}
-        ),
+            title: 'Saved Addresses',
+            subtitle: 'Edit and change the Saved addresses',
+            leading: const Icon(Icons.settings_rounded,
+                color: Color.fromARGB(255, 0, 65, 245), size: 35.0),
+            onTap: () {}),
       ],
     );
   }

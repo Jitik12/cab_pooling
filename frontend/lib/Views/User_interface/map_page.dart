@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:swift_street/Widgets/bottom_sheet.dart';
+import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/data/CabPoolRequest.dart';
 
 class MapPage extends StatefulWidget {
   final Widget? sheetContent;
   final bool dragable;
   final double maxSheetSize;
-  const MapPage({super.key, this.sheetContent, required this.dragable,  required this.maxSheetSize ,});
+  const MapPage({
+    super.key,
+    this.sheetContent,
+    required this.dragable,
+    required this.maxSheetSize,
+  });
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -37,7 +43,7 @@ class _MapPageState extends State<MapPage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              color: Colors.black,
+              color: blackColor,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.white),
                 shape: MaterialStateProperty.all(
@@ -55,7 +61,7 @@ class _MapPageState extends State<MapPage> {
                 Icons.location_searching,
               ),
               onPressed: () {},
-              color: Colors.black,
+              color: blackColor,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.white),
                 shape: MaterialStateProperty.all(

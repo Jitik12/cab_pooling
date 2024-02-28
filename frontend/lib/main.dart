@@ -10,6 +10,7 @@ import 'package:swift_street/Views/User_interface/edit_profile.dart';
 import 'package:swift_street/Views/User_interface/map_page.dart';
 import 'package:swift_street/Views/User_interface/home_page.dart';
 import 'package:swift_street/Views/User_interface/payment_details.dart';
+import 'package:swift_street/Views/User_interface/ride_details.dart';
 import 'package:swift_street/constants/routes.dart';
 
 void main() {
@@ -48,8 +49,9 @@ void main() {
             sheetContent: TripPoolSuccessSheet(),
             dragable: true,
             maxSheetSize: 0.65),
-        editProfile: (context)=> const EditProfilePage(),
-        paymentDetails: (context)=> const PaymentDetailsPage(),
-        editPayment: (context)=> const EditPaymentPage(),
+        editProfile: (context) => const EditProfilePage(),
+        paymentDetails: (context) => const PaymentDetailsPage(),
+        editPayment: (context) => const EditPaymentPage(),
+        rideDetails: (context) => RideDetails(),
       }));
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/constants/colors.dart';
 
 class CustomizedPopUpMenu<E> extends StatefulWidget {
   final String? text;
@@ -38,7 +39,7 @@ class _CustomizedPopUpMenuState<E> extends State<CustomizedPopUpMenu<E>> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: Colors.black54),
+          border: Border.all(color: black54),
         ),
         child: InkWell(
           onTap: () => _showDropdownMenu(context: context),

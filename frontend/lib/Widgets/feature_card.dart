@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/constants/colors.dart';
 
 Widget getFeatureCard(
     {required double width,
@@ -30,7 +31,7 @@ Widget getFeatureCard(
           child: Text(
             text,
             style: GoogleFonts.poppins(
-              color: Colors.black,
+              color: blackColor,
               fontSize: 18.0,
               fontWeight: FontWeight.w500,
             ),

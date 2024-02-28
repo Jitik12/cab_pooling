@@ -4,6 +4,7 @@ import 'package:swift_street/Widgets/bookings_card.dart';
 import 'package:swift_street/Widgets/feature_card.dart';
 import 'package:swift_street/Widgets/input_field.dart';
 import 'package:swift_street/Widgets/place_card.dart';
+import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/constants/routes.dart';
 
 class HomeSection extends StatefulWidget {
@@ -41,7 +42,7 @@ class _HomeSectionState extends State<HomeSection> {
               'keyboardType': TextInputType.name,
               'alignment': TextAlign.center,
               'prefixIcon':
-                  const Icon(Icons.search, color: Colors.black, size: 30.0),
+                  const Icon(Icons.search, color: blackColor, size: 30.0),
               'hintSize': 20.0,
             },
           ),
@@ -130,17 +131,21 @@ class _HomeSectionState extends State<HomeSection> {
           ),
           const SizedBox(height: 10),
           getBookingCard(
-            destination: 'Secunderabad Railway Station',
-            pickup: 'IIT Hyderabad',
-            time: DateTime(1969, 7, 20, 20, 18, 04),
-            imagePath: 'assets/images/home_section/location.png',
-          ),
+              destination: 'Secunderabad Railway Station',
+              pickup: 'IIT Hyderabad',
+              time: DateTime(1969, 7, 20, 20, 18, 04),
+              imagePath: 'assets/images/home_section/location.png',
+              onTap: () {
+                Navigator.of(context).pushNamed(rideDetails);
+              }),
+          const SizedBox(height: 10),
           getBookingCard(
-            destination: 'RGIA Hyderabad',
-            pickup: 'IIT Hyderabad',
-            time: DateTime(1969, 7, 20, 20, 18, 04),
-            imagePath: 'assets/images/home_section/location.png',
-          ),
+              destination: 'RGIA Hyderabad',
+              pickup: 'IIT Hyderabad',
+              time: DateTime(1969, 7, 20, 20, 18, 04),
+              imagePath: 'assets/images/home_section/location.png',
+              onTap: () {}),
+          const SizedBox(height: 10),
         ],
       ),
     );

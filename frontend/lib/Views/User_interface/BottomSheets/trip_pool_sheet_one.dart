@@ -6,6 +6,7 @@ import 'package:swift_street/Widgets/dialog/ok_dialog.dart';
 import 'package:swift_street/Widgets/green_button.dart';
 import 'package:swift_street/Widgets/iconedButton.dart';
 import 'package:swift_street/Widgets/location_input.dart';
+import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/constants/routes.dart';
 import 'package:swift_street/constants/sheet_padding.dart';
 import 'package:swift_street/data/CabPoolRequest.dart';
@@ -128,7 +129,7 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
             child: Text(
               'See how Slot works',
               style: GoogleFonts.poppins(
-                color: Colors.black54,
+                color: black54,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),

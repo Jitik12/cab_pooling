@@ -4,6 +4,7 @@ import 'package:swift_street/Views/User_interface/bookings_section.dart';
 import 'package:swift_street/Views/User_interface/home_section.dart';
 import 'package:swift_street/Views/User_interface/notification_section.dart';
 import 'package:swift_street/Views/User_interface/user_section.dart';
+import 'package:swift_street/constants/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class _HomePageState extends State {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        shadowColor: Colors.blue,
+        shadowColor: blueColor,
         leading: const Padding(
           padding: EdgeInsets.only(left: 16.0),
           child: Image(
@@ -52,7 +53,7 @@ class _HomePageState extends State {
         title: Text(
           getTitle(_selectedTab),
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: blackColor,
             fontWeight: FontWeight.w500,
             fontSize: 30,
           ),
@@ -65,7 +66,7 @@ class _HomePageState extends State {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedTab,
         onTap: (index) => _changeTab(index),
-        selectedItemColor: Colors.blue,
+        selectedItemColor: blueColor,
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(

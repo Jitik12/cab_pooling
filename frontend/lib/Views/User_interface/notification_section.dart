@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Widgets/heading_count_more.dart';
+import 'package:swift_street/constants/colors.dart';
 
 class NotificationSection extends StatefulWidget {
   const NotificationSection({super.key});
@@ -86,7 +87,7 @@ Widget getNotification({required String title}) {
   return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: const BorderSide(color: Colors.black26),
+        side: const BorderSide(color: black26),
       ),
       leading: Image.asset(
         'assets/images/home_section/notification_prefix.png',
@@ -95,11 +96,11 @@ Widget getNotification({required String title}) {
       titleTextStyle: GoogleFonts.poppins(
         fontSize: 13,
         fontWeight: FontWeight.w500,
-        color: Colors.black,
+        color: blackColor,
       ),
       trailing: const Icon(
         Icons.arrow_forward_ios,
-        color: Colors.black,
+        color: blackColor,
         size: 20,
       ));
 }

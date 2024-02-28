@@ -50,6 +50,7 @@ class _BookingSectionState extends State<BookingSection> {
               pickup: 'IIT Hyderabad',
               time: DateTime(1969, 7, 20, 20, 18, 04),
               imagePath: 'assets/images/home_section/location.png',
+              onTap: (){}
             ),
           );
         } else {
@@ -60,6 +61,7 @@ class _BookingSectionState extends State<BookingSection> {
               pickup: 'IIT Hyderabad',
               time: DateTime(1969, 7, 20, 20, 18, 04),
               imagePath: 'assets/images/home_section/location.png',
+              onTap: (){}
             ),
           );
         }

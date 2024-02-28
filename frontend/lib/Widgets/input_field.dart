@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swift_street/constants/colors.dart';
 
 // ignore: non_constant_identifier_names
 Widget InputField({
@@ -15,7 +16,7 @@ Widget InputField({
   final hintSize = args?['hintSize'] as double? ?? 20;
   final hintWeight = args?['hintWeight'] as FontWeight? ?? FontWeight.w500;
 
-  final contentPadding = args?['contentPadding'] as EdgeInsets? ;
+  final contentPadding = args?['contentPadding'] as EdgeInsets?;
   return TextField(
     controller: controller,
     textAlign: alignment,
@@ -23,7 +24,7 @@ Widget InputField({
       prefixIcon: prefixIcon,
       hintText: hintText,
       hintStyle: GoogleFonts.poppins(
-        color: Colors.black,
+        color: blackColor,
         fontSize: hintSize,
         fontWeight: hintWeight,
       ),
