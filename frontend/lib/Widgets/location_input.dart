@@ -24,6 +24,7 @@ Widget locationInput({
         child: InputField(
           hintText: hintText,
           controller: controller,
+          onTap: () {},
           args: {
             'keyboardType': TextInputType.streetAddress,
             'contentPadding': const EdgeInsets.all(10.0),

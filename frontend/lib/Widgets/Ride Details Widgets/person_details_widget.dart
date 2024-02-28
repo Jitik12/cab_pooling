@@ -19,19 +19,22 @@ class PersonDetailsWidget extends StatelessWidget {
       contentPadding: const EdgeInsets.all(0),
       leading: CircleAvatar(
         backgroundColor: Colors.grey[300],
-        radius: 30,
+        radius: 25,
         child: (image == null
             ? const Icon(
                 Icons.person,
                 size: 30,
                 color: Colors.white,
               )
-            : null),
+            : Image.asset(
+                image!,
+                fit: BoxFit.cover,
+              )),
       ),
       title: Text(
         name,
         style: GoogleFonts.poppins(
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -47,29 +50,29 @@ class PersonDetailsWidget extends StatelessWidget {
         spacing: 12, // space between two icons
         children: <Widget>[
           Container(
-            width: 50,
-            height: 50,
+            width: 35,
+            height: 35,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: blueColor,
+              borderRadius: BorderRadius.circular(17.5),
+              color: dartBlueShade,
             ),
             child: const Icon(
               Icons.call,
               color: Colors.white,
-              size: 30,
+              size: 20,
             ),
           ),
           Container(
-            width: 50,
-            height: 50,
+            width: 35,
+            height: 35,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: blueColor,
+              borderRadius: BorderRadius.circular(17.5),
+              color: dartBlueShade,
             ),
             child: const Icon(
               Icons.mail,
               color: Colors.white,
-              size: 30,
+              size: 20,
             ),
           ),
         ],

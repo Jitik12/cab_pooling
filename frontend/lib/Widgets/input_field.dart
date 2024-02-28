@@ -6,6 +6,7 @@ import 'package:swift_street/constants/colors.dart';
 Widget InputField({
   required String hintText,
   required TextEditingController controller,
+  required Function() onTap,
   Map<String, dynamic>? args,
 }) {
   final keyBoardType =
@@ -15,10 +16,13 @@ Widget InputField({
   final Icon? prefixIcon = args?['prefixIcon'] as Icon?;
   final hintSize = args?['hintSize'] as double? ?? 20;
   final hintWeight = args?['hintWeight'] as FontWeight? ?? FontWeight.w500;
-
+  final readonly = args?['readonly'] as bool? ?? false;
   final contentPadding = args?['contentPadding'] as EdgeInsets?;
   return TextField(
     controller: controller,
+    onTap: () {
+      onTap();
+    },
     textAlign: alignment,
     decoration: InputDecoration(
       prefixIcon: prefixIcon,
@@ -33,6 +37,7 @@ Widget InputField({
         borderRadius: BorderRadius.circular(10),
       ),
     ),
+    readOnly: readonly,
     keyboardType: keyBoardType,
     obscureText: isObscure,
   );

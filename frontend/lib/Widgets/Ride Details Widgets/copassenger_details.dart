@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/Ride%20Details%20Widgets/person_details.dart';
+import 'package:swift_street/Widgets/Ride%20Details%20Widgets/person_details_widget.dart';
 import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/data/CoPassengerDetails.dart';
 
@@ -34,7 +34,7 @@ class CoPassengerDetailsWidget extends StatelessWidget {
                   width: 30,
                   height: 20,
                   decoration: BoxDecoration(
-                    color: blueColor,
+                    color: dartBlueShade,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(

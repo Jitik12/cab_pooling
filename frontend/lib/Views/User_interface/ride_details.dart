@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Widgets/Ride%20Details%20Widgets/copassenger_details.dart';
+import 'package:swift_street/Widgets/Ride%20Details%20Widgets/driver_details.dart';
 import 'package:swift_street/Widgets/review_row.dart';
 import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/data/CoPassengerDetails.dart';
+import 'package:swift_street/data/DriverDetails.dart';
 
 class RideDetails extends StatelessWidget {
   RideDetails({super.key});
-  final List<CoPassengerData> passengers = [];
+  final List<CoPassengerData> passengers = [
+    CoPassengerData(name: 'Angel Priya', phone: '+91-9876543210'),
+    CoPassengerData(name: 'Riya', phone: '+91-9876543210')
+  ];
+
+  final DriverDetails? driverDetails = DriverDetails(
+    name: 'Sunder Ramesh',
+    phone: '+91-9876543210',
+    vehicleNumber: 'TS 08 1234',
+    vehicleMake: 'Innova Crysta',
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        shadowColor: blueColor,
+        shadowColor: blackColor,
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: IconButton(
@@ -83,38 +95,8 @@ class RideDetails extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                'Driver Details',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Center(
-                child: Text(
-                  'No Driver assigned',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Center(
-                child: Text(
-                  'You can contact pooled passengers and book your own cab',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: greyShade,
-                  ),
-                ),
+              DriverDetailsWidget(
+                driverDetails: driverDetails,
               ),
               const SizedBox(
                 height: 15,

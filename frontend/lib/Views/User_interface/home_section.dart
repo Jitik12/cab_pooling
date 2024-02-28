@@ -37,6 +37,9 @@ class _HomeSectionState extends State<HomeSection> {
         children: [
           InputField(
             hintText: 'Start Your Ride',
+            onTap: () {
+              Navigator.of(context).pushNamed(tripPoolingHome);
+            },
             controller: _destinationController,
             args: {
               'keyboardType': TextInputType.name,
@@ -44,6 +47,7 @@ class _HomeSectionState extends State<HomeSection> {
               'prefixIcon':
                   const Icon(Icons.search, color: blackColor, size: 30.0),
               'hintSize': 20.0,
+              'readonly': true,
             },
           ),
           const SizedBox(height: 20),
