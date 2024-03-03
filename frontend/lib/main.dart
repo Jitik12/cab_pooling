@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/instant_cab_success_sheet.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/instant_cabs_review_sheet.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/instant_cabs_sheet_one.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_review_sheet.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_sheet_one.dart';
-import 'package:swift_street/Views/User_interface/BottomSheets/trip_pool_succes_sheet.dart';
-import 'package:swift_street/Views/User_interface/edit_payment_details.dart';
-import 'package:swift_street/Views/User_interface/edit_profile.dart';
-import 'package:swift_street/Views/User_interface/map_page.dart';
-import 'package:swift_street/Views/User_interface/home_page.dart';
-import 'package:swift_street/Views/User_interface/payment_details.dart';
-import 'package:swift_street/Views/User_interface/ride_details.dart';
+import 'package:swift_street/Views/BottomSheets/instant_cab_success_sheet.dart';
+import 'package:swift_street/Views/BottomSheets/instant_cabs_review_sheet.dart';
+import 'package:swift_street/Views/BottomSheets/instant_cabs_sheet_one.dart';
+import 'package:swift_street/Views/BottomSheets/trip_pool_review_sheet.dart';
+import 'package:swift_street/Views/BottomSheets/trip_pool_sheet_one.dart';
+import 'package:swift_street/Views/BottomSheets/trip_pool_succes_sheet.dart';
+import 'package:swift_street/Views/edit_payment_details.dart';
+import 'package:swift_street/Views/edit_profile.dart';
+import 'package:swift_street/Views/home_page.dart';
+import 'package:swift_street/Views/map_page.dart';
+import 'package:swift_street/Views/payment_details.dart';
+import 'package:swift_street/Views/ride_details.dart';
 import 'package:swift_street/constants/routes.dart';
 
 void main() {

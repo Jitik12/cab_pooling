@@ -148,7 +148,9 @@ class _HomeSectionState extends State<HomeSection> {
               pickup: 'IIT Hyderabad',
               time: DateTime(1969, 7, 20, 20, 18, 04),
               imagePath: 'assets/images/home_section/location.png',
-              onTap: () {}),
+              onTap: () {
+                Navigator.of(context).pushNamed(rideDetails);
+              }),
           const SizedBox(height: 10),
         ],
       ),

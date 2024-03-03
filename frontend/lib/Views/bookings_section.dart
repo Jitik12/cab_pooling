@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swift_street/Widgets/bookings_card.dart';
-import 'package:swift_street/Widgets/heading_count_more.dart';
+import 'package:swift_street/Widgets/heading_with_more.dart';
+import 'package:swift_street/constants/routes.dart';
 
 class BookingSection extends StatefulWidget {
   const BookingSection({super.key});
@@ -10,8 +11,8 @@ class BookingSection extends StatefulWidget {
 }
 
 class _BookingSectionState extends State<BookingSection> {
-  final int _upcomingNum = 24;
-  final int _historyNum = 22;
+  final int _upcomingNum = 4;
+  final int _historyNum = 2;
 
   // Boolean flags to control visibility
   bool _showUpcomingBookings = false;
@@ -46,44 +47,46 @@ class _BookingSectionState extends State<BookingSection> {
           return Visibility(
             visible: _showUpcomingBookings || index == 1,
             child: getBookingCard(
-              destination: 'Secunderabad Railway Station',
-              pickup: 'IIT Hyderabad',
-              time: DateTime(1969, 7, 20, 20, 18, 04),
-              imagePath: 'assets/images/home_section/location.png',
-              onTap: (){}
-            ),
+                destination: 'Secunderabad Railway Station',
+                pickup: 'IIT Hyderabad',
+                time: DateTime(1969, 7, 20, 20, 18, 04),
+                imagePath: 'assets/images/home_section/location.png',
+                onTap: () {
+                  Navigator.of(context).pushNamed(rideDetails);
+                }),
           );
         } else {
           return Visibility(
             visible: _showHistoryBookings || index == _upcomingNum + 2,
             child: getBookingCard(
-              destination: 'RGIA Hyderabad',
-              pickup: 'IIT Hyderabad',
-              time: DateTime(1969, 7, 20, 20, 18, 04),
-              imagePath: 'assets/images/home_section/location.png',
-              onTap: (){}
-            ),
+                destination: 'RGIA Hyderabad',
+                pickup: 'IIT Hyderabad',
+                time: DateTime(1969, 7, 20, 20, 18, 04),
+                imagePath: 'assets/images/home_section/location.png',
+                onTap: () {
+                  Navigator.of(context).pushNamed(rideDetails);
+                }),
           );
         }
       },
       separatorBuilder: (context, index) {
-
-        
-        if(index <= _upcomingNum && _showUpcomingBookings) {
+        if (index <= _upcomingNum && _showUpcomingBookings) {
           return const SizedBox(height: 10);
         }
-        if(index <= _upcomingNum + _historyNum + 1 && index >= _upcomingNum + 2 && _showHistoryBookings) {
-          return const SizedBox(height: 10);
-        }
-
-        if(!_showUpcomingBookings && index == 1) {
+        if (index <= _upcomingNum + _historyNum + 1 &&
+            index >= _upcomingNum + 2 &&
+            _showHistoryBookings) {
           return const SizedBox(height: 10);
         }
 
-        if(!_showHistoryBookings && index == _upcomingNum + 2) {
+        if (!_showUpcomingBookings && index == 1) {
           return const SizedBox(height: 10);
         }
-        return const SizedBox(height:0);
+
+        if (!_showHistoryBookings && index == _upcomingNum + 2) {
+          return const SizedBox(height: 10);
+        }
+        return const SizedBox(height: 0);
       },
     );
   }

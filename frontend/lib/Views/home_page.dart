@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Views/User_interface/bookings_section.dart';
-import 'package:swift_street/Views/User_interface/home_section.dart';
-import 'package:swift_street/Views/User_interface/notification_section.dart';
-import 'package:swift_street/Views/User_interface/user_section.dart';
+import 'package:swift_street/Views/bookings_section.dart';
+import 'package:swift_street/Views/home_section.dart';
+import 'package:swift_street/Views/notification_section.dart';
+import 'package:swift_street/Views/user_section.dart';
 import 'package:swift_street/constants/colors.dart';
 
 class HomePage extends StatefulWidget {

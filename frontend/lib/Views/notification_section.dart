@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/heading_count_more.dart';
+import 'package:swift_street/Widgets/heading_with_more.dart';
 import 'package:swift_street/constants/colors.dart';
 
 class NotificationSection extends StatefulWidget {
@@ -50,14 +50,14 @@ class _NotificationSectionState extends State<NotificationSection> {
 
           return Visibility(
               visible: _showUnreadNotifications || index == 1,
-              child: getNotification(title: title));
+              child: NotificationWidget(title: title));
         } else {
           const title =
               'Sorry, no driver could be found. You can still call your pool mates and book your own cab!';
 
           return Visibility(
               visible: _showReadNotifications || index == _unreadNum + 2,
-              child: getNotification(title: title));
+              child: NotificationWidget(title: title));
         }
       },
       separatorBuilder: (context, index) {
@@ -83,7 +83,7 @@ class _NotificationSectionState extends State<NotificationSection> {
   }
 }
 
-Widget getNotification({required String title}) {
+Widget NotificationWidget({required String title}) {
   return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
