@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "614616149134",
+    "project_id": "swiftstreet-ada41",
+    "storage_bucket": "swiftstreet-ada41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614616149134:android:b1e4aadbf627a39c9eaddf",
+        "android_client_info": {
+          "package_name": "com.example.swift_street"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614616149134-t0g5986ruj3ho04qde5ivv7jbrlef2sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn6q9Pi8DL2SFeaqw0fv-2W-bRN3RUb84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614616149134-t0g5986ruj3ho04qde5ivv7jbrlef2sd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "614616149134-8tpp2q5apmtjp84ahcbftmacsijs9dif.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.swiftStreet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
