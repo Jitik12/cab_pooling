@@ -12,7 +12,7 @@ import 'package:swift_street/Views/map_page.dart';
 import 'package:swift_street/Views/payment_details.dart';
 import 'package:swift_street/Views/ride_details.dart';
 import 'package:swift_street/constants/routes.dart';
-import 'package:swift_street/splash_screen.dart';
+import 'package:swift_street/Views/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +26,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       routes: {
+        homeRoute: (context) => const HomePage(),
         tripPoolingHome: (context) => const MapPage(
             sheetContent: TripPoolSheetOne(),
             maxSheetSize: 0.6,

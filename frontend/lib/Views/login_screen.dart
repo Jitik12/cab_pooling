@@ -4,14 +4,16 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/login_child1.dart';
-import 'package:swift_street/login_child2.dart';
+import 'package:swift_street/Views/login_child1.dart';
+import 'package:swift_street/Views/login_child2.dart';
 import 'package:swift_street/page_indicator.dart';
 import 'package:swift_street/services/auth/auth_exceptions.dart';
 import 'package:swift_street/services/auth/auth_service.dart';
 import 'dart:developer' as devtools;
 
 import 'package:swift_street/services/auth/auth_user.dart';
+
+import 'googleSignInButton.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -70,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen>
             ),
           ),
         ),
-        floatingActionButton: googleSignInButton(),
+        floatingActionButton: googleSignInButton(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: Stack(
           alignment: Alignment.bottomCenter,
@@ -98,43 +100,3 @@ class _LoginScreenState extends State<LoginScreen>
   }
 }
 
-Widget googleSignInButton() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-    child: OutlinedButton(
-      onPressed: () async {
-        try {
-          await AuthService().signInWithGoogle();
-        } on PlatformException catch (e) {
-          devtools.log('Error occurred ${e.message}', name: 'LoginScreen');
-        }
-      },
-      style: OutlinedButton.styleFrom(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        side: BorderSide(width: 1, color: black54),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset('assets/images/google_logo.png', height: 25.0),
-            const SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Continue with Google',
-              style: GoogleFonts.urbanist(
-                fontSize: 17,
-                color: blackColor,
-                fontWeight: FontWeight.w600,
-              ),
-            )
-          ],
-        ),
-      ),
-    ),
-  );
-}

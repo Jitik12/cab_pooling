@@ -6,6 +6,12 @@ import 'package:swift_street/services/auth/google_auth_provider.dart';
 import 'dart:developer' as devtools;
 
 class AuthService /*implements AuthProviderClass*/ {
+
+
+   static final AuthService _shared =
+      AuthService._sharedInstance();
+  AuthService._sharedInstance();
+  factory AuthService() => _shared;
   // final AuthProviderClass provider  ;
 
   // factory AuthService.google() {
@@ -39,30 +45,33 @@ class AuthService /*implements AuthProviderClass*/ {
 
   Future<void> signInWithGoogle() async {
     if (currentUser != null) {
-      devtools.log('User already signed in ${currentUser}',
-          name: 'AuthService');
       return;
     }
     await _googleSignIn.signIn();
-    devtools.log('User signed in ${currentUser}', name: 'AuthService');
     GoogleSignInAuthentication? authentication =
         await currentUser?.authentication;
 
-    devtools.log(
-        'Authentication token ${authentication?.idToken} ${authentication?.accessToken}',
-        name: 'AuthService');
+
   }
 
   Future<void> signOutGoogle() async {
     try {
-      devtools.log('User signed out ${currentUser}', name: 'AuthService');
-      await _googleSignIn.signOut();
+      if(currentUser != null)
+        await _googleSignIn.signOut();
     } catch (error) {
       devtools.log(error.toString(), name: 'AuthService');
     }
   }
 
   Future<void> refreshToken() async {
+    try {
+      await _googleSignIn.signInSilently();
+    } catch (error) {
+      devtools.log(error.toString(), name: 'AuthService');
+    }
+  }
+
+  Future<void> silentSignIn() async {
     try {
       await _googleSignIn.signInSilently();
     } catch (error) {

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_street/Widgets/bordered_listile.dart';
 import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/constants/routes.dart';
+import 'package:swift_street/services/auth/auth_service.dart';
 
 class UserSection extends StatefulWidget {
   const UserSection({super.key});
@@ -12,22 +13,31 @@ class UserSection extends StatefulWidget {
 }
 
 class _UserSectionState extends State<UserSection> {
+  String? userName;
+  String? displayImage;
+  @override
+  void initState() {
+    super.initState();
+    userName = AuthService().currentUser!.displayName!;
+    displayImage = AuthService().currentUser!.photoUrl!;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const CircleAvatar(
+         CircleAvatar(
           radius: 70,
           backgroundColor: Colors.white,
-          backgroundImage: AssetImage('assets/images/user.png'),
+          backgroundImage: NetworkImage(displayImage!),
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
-          'Emma Watson',
+          userName!,
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -68,10 +78,10 @@ class _UserSectionState extends State<UserSection> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Name',
                       style: TextStyle(
                         fontSize: 16,
@@ -80,8 +90,8 @@ class _UserSectionState extends State<UserSection> {
                       ),
                     ),
                     Text(
-                      'Emma Watson',
-                      style: TextStyle(
+                      userName!,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: blackColor,
