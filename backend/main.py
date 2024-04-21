@@ -20,7 +20,7 @@ async def read_root():
     return {"Hello": "World"}
 
 
-@app.post("/register_/")
+@app.post("/register/")
 async def register(data: models.Register_NotVerified):
     print("Handling register")
     res = tasks.handle_register(data)
