@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Depends, UploadFile, Header
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from tasks import models, tasks
+from fastapi import Depends
+from stuff import tasks, models
 
 app = FastAPI()
-origins = ["*"] # added all the origins for now
+
+origins = ["http://localhost", "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,27 +18,63 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    print("Opened Server")
     return {"Hello": "World"}
 
 
-@app.post("/register/")
-async def register(data: models.Register_NotVerified):
-    print("Handling register")
-    res = tasks.handle_register(data)
-    return data
+@app.post("/register")
+async def register(data: models.User_Register):
+    res = await tasks.handle_register(data)
+    return res
 
 
-@app.post("login/")
-async def login(data: models.Register_NotVerified):
-    print("Handling login")
-    res = tasks.handle_login(data)
-    return data
-
-
-@app.post("/profile_create/")
-async def profile_create(data: models.User):
-    print("Handling profile create")
+@app.post("/profile_create")
+async def profile_create(data: models.User_Profile_Create):
     res = tasks.handle_profile_create(data)
+    return {"Hello": "Profile Create"}
+
+
+
+@app.post("/login_via_token")
+async def login_via_token(data: models.User_Login_Token):
+    res = await tasks.handle_login_via_token(data)
+    return res
+
+@app.post("/login")
+async def login(data: models.User_Login):
+    res = await tasks.handle_login(data)
+    return res
+
+
+@app.post("/register_pool_ride")
+async def register_pool_ride(data: models.Pool_Ride_Register):
+    res = await tasks.handle_pool_ride_register(data)
+    return res
+
+
+@app.post("/register_instant_cab")
+async def register_instant_cab(data: models.Instant_Ride_Register):
+    res = await tasks.handle_instant_ride_register(data)
+    return res
+
+
+@app.get("/driver_fetch_pools")
+async def driver_pools():
+    res = await tasks.driver_fetch_pool()
+    return res
+
+
+@app.post("/driver_accept_pool")
+async def driver_accept_pool(data: models.Accept_Pool_Ride):
+    res = await tasks.driver_accept_pool(data)
+    return res
+
+@app.get("/driver_fetch_instant")
+async def driver_instant():
+    res = await tasks.driver_fetch_instant()
+    return res
+
+@app.post("/driver_accept_instant")
+async def driver_accept_instant(data: models.Accept_Instant_Ride):
+    res = await tasks.driver_accept_instant(data)
     return res
 

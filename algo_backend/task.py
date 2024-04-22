@@ -3,7 +3,7 @@ from pool_people import pool_people_zone
 from classes import Person
 
 
-def make_pool():
+async def make_pool():
     conn, cursor = database.make_db()
     """
     I have a table of people looking for pools stored in postgres, I need to sort them based on zones and start pooling people    
@@ -13,18 +13,20 @@ def make_pool():
         - Then move to the next zone
     - If no people then move to the next zone
     """
-    zones = ['zone1', 'zone2']
+    zones = ['RGAI', 'Miyaour', 'Hitex', 'Gachibowli', 'Charminar']
     for zone in zones:
+        print(f"zone : {zone}")
         query = f"""
-        select * from <table> where zone = '{zone}'
+        select * from application_pool where zone = '{zone}'
         """
         cursor.execute(query)
         res = cursor.fetchall()
         my_people = []
         for each in res:
-            my_people.append(Person(each[0], each[1], each[2], each[3]))
+            my_people.append(Person(each[5], each[6], each[4], each[0]))
+        print(res)
         if len(res) > 1:
             # Start pooling
-            pool_people_zone(my_people, zone)
+            res = await pool_people_zone(my_people, zone)
         else:
             continue
