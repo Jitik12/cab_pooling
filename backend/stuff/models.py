@@ -68,3 +68,7 @@ class Specific_Pool(BaseModel):
 
 class My_Pool_Customer(BaseModel):
     email: str
+
+class My_Pool_Driver(BaseModel):
+    email: str
+

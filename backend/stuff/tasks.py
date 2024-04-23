@@ -443,3 +443,37 @@ async def handle_get_my_pool_customer(data: models.My_Pool_Customer):
     }
     return answer
 
+
+async def handle_get_my_pool_driver(data: models.My_Pool_Driver):
+    conn, cursor = database.make_db()
+    query = f"""
+    select * from active_pools natural join accept_pools where email = '{data.email}'
+    """
+    cursor.execute(query)
+    res = cursor.fetchall()
+    strength = res[0][6]
+    pools = []
+    for i in range(2, 6):
+        if res[0][i] != -1:
+            pools.append(res[0][i])
+    people_in_pool = []
+    for id in pools:
+        query = f"""
+        select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+        """
+        cursor.execute(query)
+        result = cursor.fetchall()
+        person = {
+            "name": result[0][0],
+            "email": result[0][1],
+            "phone": result[0][2],
+            "photoURL": result[0][3]
+        }
+        people_in_pool.append(person)
+    conn.close()
+    answer = {
+        "strength": strength,
+        "cost": await get_cost_per_person(10, 10, strength, 10)*strength,
+        "people": people_in_pool
+    }
+

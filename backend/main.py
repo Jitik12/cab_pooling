@@ -88,3 +88,8 @@ async def get_specific_pool(data: models.Specific_Pool):
 async def get_my_pool_customer(data: models.My_Pool_Customer):
     res = await tasks.handle_get_my_pool_customer(data)
     return res
+
+@app.post("/get_my_pool_driver")
+async def get_my_pool_driver(data: models.My_Pool_Driver):
+    res = await tasks.handle_get_my_pool_driver(data)
+    return res
