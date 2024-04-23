@@ -73,18 +73,23 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
         ]),
         const SizedBox(height: 15),
         locationInput(
-          hintText: 'Start',
-          controller: startController,
-          width: screenWidth - 2 * sheetPadding - 30,
-          icon: Icons.location_searching,
-        ),
+            hintText: 'Start',
+            controller: startController,
+            width: screenWidth - 2 * sheetPadding - 30,
+            icon: Icons.location_searching,
+            onTap: () {
+              Navigator.pushNamed(context, setMarkerPage);
+            }),
         const SizedBox(height: 10),
         locationInput(
-          hintText: 'Destination',
-          controller: destinationController,
-          width: screenWidth - 2 * sheetPadding - 30,
-          icon: Icons.location_on,
-        ),
+            hintText: 'Destination',
+            controller: destinationController,
+            width: screenWidth - 2 * sheetPadding - 30,
+            icon: Icons.location_on,
+            onTap: () {
+              print('helo');
+              Navigator.pushNamed(context, setMarkerPage);
+            }),
         const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

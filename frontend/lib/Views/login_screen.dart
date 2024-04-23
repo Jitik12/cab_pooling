@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:swift_street/Widgets/page_indicator.dart';
 import 'package:swift_street/constants/colors.dart';
 import 'package:swift_street/Views/login_child1.dart';
 import 'package:swift_street/Views/login_child2.dart';
-import 'package:swift_street/page_indicator.dart';
-import 'package:swift_street/services/auth/auth_exceptions.dart';
-import 'package:swift_street/services/auth/auth_service.dart';
-import 'dart:developer' as devtools;
 
-import 'package:swift_street/services/auth/auth_user.dart';
 
 import 'googleSignInButton.dart';
 

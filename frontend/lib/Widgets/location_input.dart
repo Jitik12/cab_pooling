@@ -7,6 +7,7 @@ Widget locationInput({
   required TextEditingController controller,
   required double width,
   required IconData icon,
+  required Function onTap,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,7 +25,9 @@ Widget locationInput({
         child: InputField(
           hintText: hintText,
           controller: controller,
-          onTap: () {},
+          onTap: () {
+            onTap();
+          },
           args: {
             'keyboardType': TextInputType.streetAddress,
             'contentPadding': const EdgeInsets.all(10.0),

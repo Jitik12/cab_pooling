@@ -69,17 +69,22 @@ class _InstantCabSheetOneState extends State<InstantCabSheetOne> {
         ]),
         const SizedBox(height: 15),
         locationInput(
-          hintText: 'Start',
-          controller: startController,
-          width: screenWidth - 2 * sheetPadding - 30,
-          icon: Icons.location_searching,
-        ),
+            hintText: 'Start',
+            controller: startController,
+            width: screenWidth - 2 * sheetPadding - 30,
+            icon: Icons.location_searching,
+            onTap: () {
+              Navigator.pushNamed(context, setMarkerPage);
+            }),
         const SizedBox(height: 10),
         locationInput(
           hintText: 'Destination',
           controller: destinationController,
           width: screenWidth - 2 * sheetPadding - 30,
           icon: Icons.location_on,
+          onTap: () {
+            Navigator.pushNamed(context, setMarkerPage);
+          },
         ),
         const SizedBox(height: 15),
         CustomizedPopUpMenu<InstantTime>(
@@ -95,14 +100,13 @@ class _InstantCabSheetOneState extends State<InstantCabSheetOne> {
         ),
         const SizedBox(height: 10),
         GreenButton(
-          onPressed: () async {
-            instantCabRequest.start = startController.text;
-            instantCabRequest.destination = destinationController.text;
+            onPressed: () async {
+              instantCabRequest.start = startController.text;
+              instantCabRequest.destination = destinationController.text;
 
-            Navigator.of(context).pushNamed(instantCabReviewPage);
-          },
-          title: 'Book the Ride'
-        )
+              Navigator.of(context).pushNamed(instantCabReviewPage);
+            },
+            title: 'Book the Ride')
       ],
     );
   }

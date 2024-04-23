@@ -1,15 +1,10 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:swift_street/constants/secrets.dart';
-import 'package:swift_street/services/auth/auth_provider.dart';
-import 'package:swift_street/services/auth/auth_user.dart';
-import 'package:swift_street/services/auth/google_auth_provider.dart';
 import 'dart:developer' as devtools;
 
+import 'package:swift_street/constants/secrets.dart';
+
 class AuthService /*implements AuthProviderClass*/ {
-
-
-   static final AuthService _shared =
-      AuthService._sharedInstance();
+  static final AuthService _shared = AuthService._sharedInstance();
   AuthService._sharedInstance();
   factory AuthService() => _shared;
   // final AuthProviderClass provider  ;
@@ -44,20 +39,21 @@ class AuthService /*implements AuthProviderClass*/ {
   GoogleSignInAccount? get currentUser => _googleSignIn.currentUser;
 
   Future<void> signInWithGoogle() async {
-    if (currentUser != null) {
-      return;
-    }
-    await _googleSignIn.signIn();
-    GoogleSignInAuthentication? authentication =
-        await currentUser?.authentication;
 
+      if (currentUser != null) {
+        return;
+      }
 
+      await _googleSignIn.signIn();
+
+   
   }
 
   Future<void> signOutGoogle() async {
     try {
-      if(currentUser != null)
+      if (currentUser != null) {
         await _googleSignIn.signOut();
+      }
     } catch (error) {
       devtools.log(error.toString(), name: 'AuthService');
     }

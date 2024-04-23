@@ -26,7 +26,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet> {
   @override
   void initState() {
     super.initState();
-    sheetPosition = widget.maxSheetSize;
+    sheetPosition = widget.minSheetSize + 0.005;
   }
 
   @override
