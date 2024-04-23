@@ -463,6 +463,7 @@ async def handle_get_my_pool_driver(data: models.My_Pool_Driver):
         """
         cursor.execute(query)
         result = cursor.fetchall()
+        print(query)
         person = {
             "name": result[0][0],
             "email": result[0][1],

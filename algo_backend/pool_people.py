@@ -34,6 +34,7 @@ async def add_curr_pool(curr_pool: List[Person], curr_strength: int, zone: str, 
     """
     cursor.execute(insert_query)
     print("Added an active pool")
+    
     conn.commit()
     conn.close()
 
