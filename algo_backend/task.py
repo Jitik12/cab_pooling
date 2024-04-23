@@ -15,16 +15,18 @@ async def make_pool():
     """
     zones = ['RGAI', 'Miyaour', 'Hitex', 'Gachibowli', 'Charminar']
     for zone in zones:
-        print(f"zone : {zone}")
+        print(f"ZONE : {zone}")
         query = f"""
-        select * from application_pool where zone = '{zone}'
+        select * from pool_applications where zone = '{zone}'
         """
         cursor.execute(query)
         res = cursor.fetchall()
         my_people = []
         for each in res:
             my_people.append(Person(each[5], each[6], each[4], each[0]))
+        print("## RES ##")
         print(res)
+        print("## RES END ##")
         if len(res) > 1:
             # Start pooling
             res = await pool_people_zone(my_people, zone)

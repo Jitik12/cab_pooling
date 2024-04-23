@@ -59,3 +59,8 @@ class Accept_Instant_Ride(BaseModel):
 class Accept_Pool_Ride(BaseModel):
     master_pool_id: int
     driver_email: str
+
+
+# to get a specific pool
+class Specific_Pool(BaseModel):
+    pool_id: int

@@ -178,6 +178,7 @@ async def handle_pool_ride_register(data: models.Pool_Ride_Register):
     conn.close()
     return {
         'message': "Added pool to the database",
+        'pool_id': pool_id
     }
 
 
@@ -275,6 +276,11 @@ async def driver_accept_pool(data: models.Accept_Pool_Ride):
     insert into accept_pools values ({data.master_pool_id}, '{data.driver_email}')
     """
     cursor.execute(insert_query)
+    delete_query = f"""
+    delete from active_pools where master_pool_id = {data.master_pool_id}
+    """
+    print(delete_query)
+    cursor.execute(delete_query)
     conn.commit()
     conn.close()
     return {
@@ -370,4 +376,25 @@ async def driver_accept_instant(data: models.Accept_Instant_Ride):
 
 
 
-
+async def handle_specific_pool(data: models.Specific_Pool):
+    conn, cursor = database.make_db()
+    query = f"""
+    select * from pool_applications where pool_id = {data.pool_id}
+    """
+    cursor.execute(query)
+    results = cursor.fetchall()
+    result = results[0]
+    answer = {
+      "pool_id": data.pool_id,
+      "email": result[1],
+      "timeslot": result[2],
+      "zone": result[3],
+      "numpeople": result[4],
+      "min": result[5],
+      "max": result[6],
+      "time": result[7],
+      "date": result[8],
+      "start": result[9],
+      "destination": result[10]
+    }
+    return answer
