@@ -83,3 +83,8 @@ async def driver_accept_instant(data: models.Accept_Instant_Ride):
 async def get_specific_pool(data: models.Specific_Pool):
     res = await tasks.handle_specific_pool(data)
     return res
+
+@app.post("/get_my_pool_customer")
+async def get_my_pool_customer(data: models.My_Pool_Customer):
+    res = await tasks.handle_get_my_pool_customer(data)
+    return res

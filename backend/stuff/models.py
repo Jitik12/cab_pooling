@@ -64,3 +64,7 @@ class Accept_Pool_Ride(BaseModel):
 # to get a specific pool
 class Specific_Pool(BaseModel):
     pool_id: int
+
+
+class My_Pool_Customer(BaseModel):
+    email: str

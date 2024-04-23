@@ -398,3 +398,48 @@ async def handle_specific_pool(data: models.Specific_Pool):
       "destination": result[10]
     }
     return answer
+
+async def handle_get_my_pool_customer(data: models.My_Pool_Customer):
+    conn, cursor = database.make_db()
+    query = f"""
+    select pool_id from pool_applications where email = '{data.email}'
+    """
+    cursor.execute(query)
+    pool_id = cursor.fetchall()
+    pool_id = pool_id[0][0]
+    # getting all the other pools which have our pool_id
+    query = f"""
+    select * from active_pools where pool_id1 = {pool_id} or pool_id2 = {pool_id} or pool_id3 = {pool_id} or pool_id4 = {pool_id}
+    """
+    cursor.execute(query)
+    res = cursor.fetchall()
+    strength = res[0][6]
+    zone = res[0][1]
+    pools = []
+    for i in range(2, 6):
+        if res[0][i] != -1:
+            pools.append(res[0][i])
+
+    people_in_pool = []
+    for id in pools:
+        query = f"""
+        select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+        """
+        cursor.execute(query)
+        result = cursor.fetchall()
+        person = {
+            "name": result[0][0],
+            "email": result[0][1],
+            "phone": result[0][2],
+            "photoURL": result[0][3]
+        }
+        people_in_pool.append(person)
+    conn.close()
+    answer = {
+        "pool_id": pool_id,
+        "strength": strength,
+        "zone": zone,
+        "people": people_in_pool
+    }
+    return answer
+
