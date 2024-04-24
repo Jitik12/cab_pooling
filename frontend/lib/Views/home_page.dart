@@ -1,10 +1,10 @@
+import 'package:CabX/Views/bookings_section.dart';
+import 'package:CabX/Views/home_section.dart';
+import 'package:CabX/Views/notification_section.dart';
+import 'package:CabX/Views/user_section.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Views/bookings_section.dart';
-import 'package:swift_street/Views/home_section.dart';
-import 'package:swift_street/Views/notification_section.dart';
-import 'package:swift_street/Views/user_section.dart';
-import 'package:swift_street/constants/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class _HomePageState extends State {
       _selectedTab = index;
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

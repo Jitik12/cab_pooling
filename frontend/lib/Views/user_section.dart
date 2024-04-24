@@ -1,9 +1,9 @@
+import 'package:CabX/Widgets/bordered_listile.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/constants/routes.dart';
+import 'package:CabX/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/bordered_listile.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/constants/routes.dart';
-import 'package:swift_street/services/auth/auth_service.dart';
 
 class UserSection extends StatefulWidget {
   const UserSection({super.key});

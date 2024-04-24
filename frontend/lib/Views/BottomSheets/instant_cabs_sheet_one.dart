@@ -1,13 +1,14 @@
+import 'package:CabX/Widgets/customized_popup_menu.dart';
+import 'package:CabX/Widgets/green_button.dart';
+import 'package:CabX/Widgets/location_input.dart';
+import 'package:CabX/constants/routes.dart';
+import 'package:CabX/constants/sheet_padding.dart';
+import 'package:CabX/data/InstantCabRequest.dart';
+import 'package:CabX/enums/instant_time.dart';
+import 'package:CabX/enums/num_people.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/green_button.dart';
-import 'package:swift_street/Widgets/customized_popup_menu.dart';
-import 'package:swift_street/Widgets/location_input.dart';
-import 'package:swift_street/constants/sheet_padding.dart';
-import 'package:swift_street/data/InstantCabRequest.dart';
-import 'package:swift_street/enums/instant_time.dart';
-import 'package:swift_street/enums/num_people.dart';
-import 'package:swift_street/constants/routes.dart';
+
 
 class InstantCabSheetOne extends StatefulWidget {
   const InstantCabSheetOne({super.key});
@@ -74,7 +75,7 @@ class _InstantCabSheetOneState extends State<InstantCabSheetOne> {
             width: screenWidth - 2 * sheetPadding - 30,
             icon: Icons.location_searching,
             onTap: () {
-              Navigator.pushNamed(context, setMarkerPage);
+              // Navigator.pushNamed(context, setMarkerPage);
             }),
         const SizedBox(height: 10),
         locationInput(
@@ -83,7 +84,7 @@ class _InstantCabSheetOneState extends State<InstantCabSheetOne> {
           width: screenWidth - 2 * sheetPadding - 30,
           icon: Icons.location_on,
           onTap: () {
-            Navigator.pushNamed(context, setMarkerPage);
+            // Navigator.pushNamed(context, setMarkerPage);
           },
         ),
         const SizedBox(height: 15),

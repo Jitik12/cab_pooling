@@ -1,9 +1,8 @@
+import 'package:CabX/Widgets/green_button.dart';
+import 'package:CabX/Widgets/input_with_heading.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/green_button.dart';
-import 'package:swift_street/Widgets/input_with_heading.dart';
-import 'package:swift_street/constants/colors.dart';
-
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 

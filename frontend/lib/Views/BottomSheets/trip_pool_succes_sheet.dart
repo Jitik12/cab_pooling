@@ -1,8 +1,7 @@
+import 'package:CabX/Widgets/green_button.dart';
+import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/green_button.dart';
-import 'package:swift_street/constants/routes.dart';
-
 class TripPoolSuccessSheet extends StatelessWidget {
   const TripPoolSuccessSheet({super.key});
 
@@ -89,7 +88,8 @@ class TripPoolSuccessSheet extends StatelessWidget {
       GreenButton(
         onPressed: () async {
           Navigator.of(context).pushNamedAndRemoveUntil(rideDetails, (route) {
-            if (route.settings.name == '/') return true;
+            print(route.settings.name);
+            if (route.settings.name == homeRoute) return true;
             return false;
           });
         },

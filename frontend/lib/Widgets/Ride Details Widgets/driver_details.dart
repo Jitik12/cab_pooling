@@ -1,8 +1,9 @@
+import 'package:CabX/Widgets/Ride%20Details%20Widgets/person_details_widget.dart';
+import 'package:CabX/Widgets/review_row.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/data/DriverDetails.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Widgets/Ride%20Details%20Widgets/person_details_widget.dart';
-import 'package:swift_street/Widgets/review_row.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/data/DriverDetails.dart';
+
 
 class DriverDetailsWidget extends StatelessWidget {
   final DriverDetails? driverDetails;

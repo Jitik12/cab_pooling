@@ -1,11 +1,11 @@
+import 'package:CabX/Widgets/bookings_card.dart';
+import 'package:CabX/Widgets/feature_card.dart';
+import 'package:CabX/Widgets/input_field.dart';
+import 'package:CabX/Widgets/place_card.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/bookings_card.dart';
-import 'package:swift_street/Widgets/feature_card.dart';
-import 'package:swift_street/Widgets/input_field.dart';
-import 'package:swift_street/Widgets/place_card.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/constants/routes.dart';
 
 class HomeSection extends StatefulWidget {
   const HomeSection({super.key});

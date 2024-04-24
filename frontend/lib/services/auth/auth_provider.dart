@@ -1,4 +1,4 @@
-import 'package:swift_street/services/auth/auth_user.dart';
+import 'package:CabX/services/auth/auth_user.dart';
 
 abstract class AuthProviderClass {
   AuthUser? get currentUser;

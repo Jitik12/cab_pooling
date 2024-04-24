@@ -10,3 +10,4 @@ const editPayment = '/edit-payment';
 const rideDetails = '/ride-details';
 const homeRoute = '/home';
 const setMarkerPage = '/set-marker';
+const loginRoute = '/login';

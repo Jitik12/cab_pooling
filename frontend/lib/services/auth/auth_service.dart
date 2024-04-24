@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:developer' as devtools;
 
-import 'package:swift_street/constants/secrets.dart';
 
 class AuthService /*implements AuthProviderClass*/ {
   static final AuthService _shared = AuthService._sharedInstance();
@@ -38,15 +38,17 @@ class AuthService /*implements AuthProviderClass*/ {
 
   GoogleSignInAccount? get currentUser => _googleSignIn.currentUser;
 
-  Future<void> signInWithGoogle() async {
-
+  Future<bool> signInWithGoogle() async {
+    try {
       if (currentUser != null) {
-        return;
+        return true;;
       }
 
       await _googleSignIn.signIn();
-
-   
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   Future<void> signOutGoogle() async {

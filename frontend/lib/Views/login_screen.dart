@@ -1,11 +1,9 @@
+import 'package:CabX/Views/login_child1.dart';
+import 'package:CabX/Views/login_child2.dart';
+import 'package:CabX/Widgets/page_indicator.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/page_indicator.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/Views/login_child1.dart';
-import 'package:swift_street/Views/login_child2.dart';
-
-
 import 'googleSignInButton.dart';
 
 class LoginScreen extends StatefulWidget {

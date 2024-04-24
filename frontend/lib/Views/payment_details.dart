@@ -1,7 +1,8 @@
+import 'package:CabX/Widgets/bordered_listile.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/bordered_listile.dart';
-import 'package:swift_street/constants/colors.dart';
+
 
 class PaymentDetailsPage extends StatefulWidget {
   const PaymentDetailsPage({super.key});

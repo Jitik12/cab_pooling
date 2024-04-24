@@ -1,10 +1,8 @@
 import 'dart:async';
 
+import 'package:CabX/constants/routes.dart';
+import 'package:CabX/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Views/home_page.dart';
-import 'package:swift_street/Views/login_screen.dart';
-import 'package:swift_street/services/auth/auth_service.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -36,23 +34,22 @@ class _SplashScreenState extends State<SplashScreen>
 
   // This method handles asynchronous initialization
   void _checkUserStatus() async {
-    Widget? screen;
+    String route;
     if (AuthService().currentUser == null) {
       await AuthService().silentSignIn();
     }
-
     if (AuthService().currentUser == null) {
-      screen = LoginScreen();
+      route = loginRoute;
     } else {
-      screen = const HomePage();
+      route = homeRoute;
     }
 
     // Ensure mounted to avoid calling setState or navigation if the widget was disposed.
     if (mounted) {
       Timer(
           const Duration(seconds: 3),
-          () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => screen!)));
+          () => Navigator.pushNamedAndRemoveUntil(
+              context, route, (_) => false));
     }
   }
 

@@ -1,7 +1,7 @@
+import 'package:CabX/Widgets/heading_with_more.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/heading_with_more.dart';
-import 'package:swift_street/constants/colors.dart';
 
 class NotificationSection extends StatefulWidget {
   const NotificationSection({super.key});

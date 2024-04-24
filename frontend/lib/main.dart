@@ -1,19 +1,22 @@
+import 'package:CabX/Views/BottomSheets/instant_cab_success_sheet.dart';
+import 'package:CabX/Views/BottomSheets/instant_cabs_review_sheet.dart';
+import 'package:CabX/Views/BottomSheets/instant_cabs_sheet_one.dart';
+import 'package:CabX/Views/BottomSheets/trip_pool_review_sheet.dart';
+import 'package:CabX/Views/BottomSheets/trip_pool_sheet_one.dart';
+import 'package:CabX/Views/BottomSheets/trip_pool_succes_sheet.dart';
+import 'package:CabX/Views/edit_payment_details.dart';
+import 'package:CabX/Views/edit_profile.dart';
+import 'package:CabX/Views/home_page.dart';
+import 'package:CabX/Views/login_screen.dart';
+import 'package:CabX/Views/map_page.dart';
+import 'package:CabX/Views/markerSetpage.dart';
+import 'package:CabX/Views/payment_details.dart';
+import 'package:CabX/Views/ride_details.dart';
+import 'package:CabX/Views/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Views/BottomSheets/instant_cab_success_sheet.dart';
-import 'package:swift_street/Views/BottomSheets/instant_cabs_review_sheet.dart';
-import 'package:swift_street/Views/BottomSheets/instant_cabs_sheet_one.dart';
-import 'package:swift_street/Views/BottomSheets/trip_pool_review_sheet.dart';
-import 'package:swift_street/Views/BottomSheets/trip_pool_sheet_one.dart';
-import 'package:swift_street/Views/BottomSheets/trip_pool_succes_sheet.dart';
-import 'package:swift_street/Views/edit_payment_details.dart';
-import 'package:swift_street/Views/edit_profile.dart';
-import 'package:swift_street/Views/home_page.dart';
-import 'package:swift_street/Views/map_page.dart';
-import 'package:swift_street/Views/markerSetpage.dart';
-import 'package:swift_street/Views/payment_details.dart';
-import 'package:swift_street/Views/ride_details.dart';
-import 'package:swift_street/constants/routes.dart';
-import 'package:swift_street/Views/splash_screen.dart';
+
+import 'constants/routes.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +61,7 @@ void main() {
           editPayment: (context) => const EditPaymentPage(),
           rideDetails: (context) => RideDetails(),
           setMarkerPage: (context) => const SetMarkerPage(),
+          loginRoute: (context) => LoginScreen(),
         }),
   );
 }

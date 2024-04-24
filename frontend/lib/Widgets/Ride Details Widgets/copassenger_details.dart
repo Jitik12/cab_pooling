@@ -1,8 +1,9 @@
+import 'package:CabX/Widgets/Ride%20Details%20Widgets/person_details_widget.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/data/CoPassengerDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/Ride%20Details%20Widgets/person_details_widget.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/data/CoPassengerDetails.dart';
+
 
 class CoPassengerDetailsWidget extends StatelessWidget {
   final List<CoPassengerData> passengers;

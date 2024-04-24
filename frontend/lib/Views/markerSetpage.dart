@@ -1,9 +1,8 @@
+import 'package:CabX/Views/BottomSheets/search_sheet.dart';
+import 'package:CabX/Widgets/location_input.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Views/BottomSheets/search_sheet.dart';
-import 'package:swift_street/Widgets/bottom_sheet.dart';
-import 'package:swift_street/Widgets/location_input.dart';
-import 'package:swift_street/constants/colors.dart';
 import 'dart:developer' as devtools;
 
 class SetMarkerPage extends StatefulWidget {

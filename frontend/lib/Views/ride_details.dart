@@ -1,12 +1,11 @@
+import 'package:CabX/Widgets/Ride%20Details%20Widgets/copassenger_details.dart';
+import 'package:CabX/Widgets/Ride%20Details%20Widgets/driver_details.dart';
+import 'package:CabX/Widgets/review_row.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/data/CoPassengerDetails.dart';
+import 'package:CabX/data/DriverDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/Ride%20Details%20Widgets/copassenger_details.dart';
-import 'package:swift_street/Widgets/Ride%20Details%20Widgets/driver_details.dart';
-import 'package:swift_street/Widgets/review_row.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/data/CoPassengerDetails.dart';
-import 'package:swift_street/data/DriverDetails.dart';
-
 class RideDetails extends StatelessWidget {
   RideDetails({super.key});
   final List<CoPassengerData> passengers = [

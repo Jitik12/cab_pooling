@@ -1,6 +1,7 @@
+import 'package:CabX/Widgets/input_field.dart';
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Widgets/input_field.dart';
-import 'package:swift_street/constants/colors.dart';
+
 
 Widget locationInput({
   required String hintText,

@@ -1,7 +1,7 @@
+import 'package:CabX/Widgets/bookings_card.dart';
+import 'package:CabX/Widgets/heading_with_more.dart';
+import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Widgets/bookings_card.dart';
-import 'package:swift_street/Widgets/heading_with_more.dart';
-import 'package:swift_street/constants/routes.dart';
 
 class BookingSection extends StatefulWidget {
   const BookingSection({super.key});

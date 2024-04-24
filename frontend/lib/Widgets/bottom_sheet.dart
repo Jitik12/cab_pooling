@@ -1,6 +1,7 @@
+import 'package:CabX/Widgets/grabber.dart';
+import 'package:CabX/constants/sheet_padding.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Widgets/grabber.dart';
-import 'package:swift_street/constants/sheet_padding.dart';
+
 
 class ScrollableBottomSheet extends StatefulWidget {
   final double minSheetSize;
@@ -26,13 +27,12 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet> {
   @override
   void initState() {
     super.initState();
-    sheetPosition = widget.minSheetSize + 0.005;
+    sheetPosition = widget.maxSheetSize;
   }
 
   @override
   Widget build(BuildContext context) {
     double mid = (widget.minSheetSize + widget.maxSheetSize) / 2;
-
     return DraggableScrollableSheet(
       initialChildSize: sheetPosition,
       minChildSize: widget.minSheetSize,

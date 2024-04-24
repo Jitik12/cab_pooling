@@ -1,8 +1,8 @@
+import 'package:CabX/Widgets/green_button.dart';
+import 'package:CabX/Widgets/review_row.dart';
+import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/green_button.dart';
-import 'package:swift_street/Widgets/review_row.dart';
-import 'package:swift_street/constants/routes.dart';
 
 // ignore: must_be_immutable
 class TripPoolReviewSheet extends StatelessWidget {
@@ -58,7 +58,7 @@ class TripPoolReviewSheet extends StatelessWidget {
           onPressed: () async {
             Navigator.pushNamedAndRemoveUntil(context, tripPoolConfirmationPage,
                 (route) {
-              if (route.settings.name == '/') {
+              if (route.settings.name == homeRoute) {
                 return true;
               }
               return false;

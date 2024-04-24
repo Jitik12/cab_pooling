@@ -1,8 +1,7 @@
+import 'package:CabX/Widgets/bottom_sheet.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/data/CabPoolRequest.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/Widgets/bottom_sheet.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/data/CabPoolRequest.dart';
-
 class MapPage extends StatefulWidget {
   final Widget? sheetContent;
   final bool dragable;

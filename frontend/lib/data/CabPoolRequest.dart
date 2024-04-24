@@ -1,7 +1,7 @@
+import 'package:CabX/enums/num_people.dart';
+import 'package:CabX/enums/time_slot.dart';
+import 'package:CabX/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/enums/num_people.dart';
-import 'package:swift_street/enums/time_slot.dart';
-import 'package:swift_street/services/auth/auth_service.dart';
 
 class CabPoolRequest {
   TimeSlot timeSlot = TimeSlot.hour_1;
@@ -31,16 +31,16 @@ class CabPoolRequest {
 
   Map<String, dynamic> toJsonForRegister() {
     return {
-      'email' : AuthService().currentUser!.email,
-      'timeSlot': '11 - 11:30' ,
-      'zone' : 'Airport',
-      'numpeople': numpeople.value,
-      'min' : numpeople.value,
-      'max' : num1.value,
-      'time': time.toString(),
-      'date': date.toString(),
-      'start': start,
-      'destination': destination,
+      "email" : AuthService().currentUser!.email,
+      "timeslot": "11 - 11:30" ,
+      "zone" : "Airport",
+      "numpeople": numpeople.value,
+      "min" : numpeople.value,
+      "max" : num1.value,
+      "time": time.toString(),
+      "date": date.toString(),
+      "start": start,
+      "destination": destination,
     };
   }
 }

@@ -1,7 +1,7 @@
+import 'package:CabX/Widgets/green_button.dart';
+import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/Widgets/green_button.dart';
-import 'package:swift_street/constants/routes.dart';
 
 class InstantCabSuccessSheet extends StatelessWidget {
   const InstantCabSuccessSheet({super.key});
@@ -38,7 +38,9 @@ class InstantCabSuccessSheet extends StatelessWidget {
       GreenButton(
         onPressed: () {
           Navigator.of(context).pushNamedAndRemoveUntil(rideDetails, (route) {
-            if (route.settings.name == '/') return true;
+            if (route.settings.name == homeRoute) {
+              return true;
+            }
             return false;
           });
         },

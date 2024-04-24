@@ -1,5 +1,5 @@
-import 'package:swift_street/enums/instant_time.dart';
-import 'package:swift_street/enums/num_people.dart';
+import 'package:CabX/enums/instant_time.dart';
+import 'package:CabX/enums/num_people.dart';
 
 class InstantCabRequest {
   InstantTime instantTime = InstantTime.now;

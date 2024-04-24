@@ -1,17 +1,18 @@
+import 'package:CabX/Widgets/customized_popup_menu.dart';
+import 'package:CabX/Widgets/dialog/ok_dialog.dart';
+import 'package:CabX/Widgets/green_button.dart';
+import 'package:CabX/Widgets/iconedButton.dart';
+import 'package:CabX/Widgets/location_input.dart';
+import 'package:CabX/constants/colors.dart';
+import 'package:CabX/constants/routes.dart';
+import 'package:CabX/constants/sheet_padding.dart';
+import 'package:CabX/data/CabPoolRequest.dart';
+import 'package:CabX/enums/num_people.dart';
+import 'package:CabX/enums/time_slot.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:swift_street/Widgets/customized_popup_menu.dart';
-import 'package:swift_street/Widgets/dialog/ok_dialog.dart';
-import 'package:swift_street/Widgets/green_button.dart';
-import 'package:swift_street/Widgets/iconedButton.dart';
-import 'package:swift_street/Widgets/location_input.dart';
-import 'package:swift_street/constants/colors.dart';
-import 'package:swift_street/constants/routes.dart';
-import 'package:swift_street/constants/sheet_padding.dart';
-import 'package:swift_street/data/CabPoolRequest.dart';
-import 'package:swift_street/enums/num_people.dart';
-import 'package:swift_street/enums/time_slot.dart';
+
 
 class TripPoolSheetOne extends StatefulWidget {
   const TripPoolSheetOne({super.key});
@@ -78,7 +79,7 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
             width: screenWidth - 2 * sheetPadding - 30,
             icon: Icons.location_searching,
             onTap: () {
-              Navigator.pushNamed(context, setMarkerPage);
+              // Navigator.pushNamed(context, setMarkerPage);
             }),
         const SizedBox(height: 10),
         locationInput(
@@ -88,7 +89,7 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
             icon: Icons.location_on,
             onTap: () {
               print('helo');
-              Navigator.pushNamed(context, setMarkerPage);
+              // Navigator.pushNamed(context, setMarkerPage);
             }),
         const SizedBox(height: 15),
         Row(

@@ -1,5 +1,5 @@
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:swift_street/constants/colors.dart';
 
 Widget iconedButton({
   IconData? prefixIcon,

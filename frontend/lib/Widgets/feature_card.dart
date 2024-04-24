@@ -1,6 +1,6 @@
+import 'package:CabX/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swift_street/constants/colors.dart';
 
 Widget getFeatureCard(
     {required double width,
