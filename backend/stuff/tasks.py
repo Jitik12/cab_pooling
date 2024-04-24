@@ -171,7 +171,7 @@ async def handle_pool_ride_register(data: models.Pool_Ride_Register):
     while pool_id in pool_ids:
         pool_id = random.randint(1_000, 10_000)
     query = f"""
-    insert into pool_applications values ({pool_id}, '{data.email}', '{data.timeslot}', '{data.zone}', '{data.numpeople}', '{data.min}', '{data.max}', '{data.time}', '{data.date}', '{data.start}', '{data.destination}')
+    insert into pool_applications values ({pool_id}, '{data.email}', '{data.timeslot}', '{data.zone}', '{data.numpeople}', '{data.min}', '{data.max}', '{data.time}', '{data.date}', '{data.start}', '{data.destination}', FALSE)
     """
     cursor.execute(query)
     conn.commit()
