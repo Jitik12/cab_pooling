@@ -17,6 +17,14 @@ class User_Profile_Create(BaseModel):
     # state: str
     # zip: str
 
+class Driver_Register(BaseModel):
+  email: str
+  password: str
+  photoURL: str
+  name: str
+  phone: str
+  car_no: str
+  car_model: str
 
 class User_Login_Token(BaseModel):
     token: str
