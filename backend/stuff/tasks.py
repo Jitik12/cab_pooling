@@ -30,6 +30,33 @@ async def handle_register(data: models.User_Register):
         'message': "Registration Successful",
     }
 
+async def handle_driver_register(data: models.Driver_Register):
+    conn, cursor = database.make_db()
+    """
+    Check if the driver exists in the driver table
+    Adding the driver to the database
+    """
+    check_query = f"""
+    select * from drivers where email = '{data.email}'
+    """
+    cursor.execute(check_query)
+    res = cursor.fetchall()
+    if len(res) > 0:
+        return {
+            'message': "Driver already exists",
+            'status': 500
+        }
+    query = f"""
+    insert into drivers values ('{data.email}','{hashlib.sha256((data.password).encode()).hexdigest()}',, '{data.photoURL}', '{data.name}', '{data.phone}', '{data.car_no}', '{data.car_model}')
+    """
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
+    return {
+        'status': 200,
+        'message': "Driver Registration Successful",
+    }
+
 
 async def handle_profile_create(data: models.User_Profile_Create):
     conn, cursor = database.make_db()
@@ -151,6 +178,29 @@ async def handle_login_via_token(data: models.User_Login_Token):
         }
 
 
+async def handle_driver_login(data: models.Driver_Login):
+    conn, cursor = database.make_db()
+    query = f"""
+    select * from drivers where email = '{data.email}' and password = '{hashlib.sha256((data.password).encode()).hexdigest()}'
+    """
+    cursor.execute(query)
+    res = cursor.fetchall()
+    if len(res) == 0:
+        return {
+            'message': "Driver does not exist. Please register first",
+            'status': 404
+        }
+    else:
+        return {
+            'message': "Driver exists",
+            'status': 200,
+            'email': res[0][0],
+            'photoURL': res[0][2],
+            'name': res[0][3],
+            'phone': res[0][4],
+            'car_no': res[0][5],
+            'car_model': res[0][6]
+        }
 
 
 async def handle_pool_ride_register(data: models.Pool_Ride_Register):

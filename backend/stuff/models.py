@@ -33,6 +33,9 @@ class User_Login_Token(BaseModel):
 class User_Login(BaseModel):
     email: str
 
+class Driver_Login(BaseModel):
+    email: str
+    password: str
 
 class Pool_Ride_Register(BaseModel):
     email: str

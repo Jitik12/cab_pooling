@@ -28,6 +28,8 @@ async def register(data: models.User_Register):
   
 @app.post("/driver_register")
 async def driver_register(data: models.Driver_Register):
+    res = await tasks.handle_driver_register(data)
+    return res
   
 
 
@@ -47,11 +49,12 @@ async def login_via_token(data: models.User_Login_Token):
 async def login(data: models.User_Login):
     res = await tasks.handle_login(data)
     return res
-  
+
+
 @app.post("/driver_login")
-asyc def driver_login(data: ):
-  res = await tasks.handle_driver_login(data)
-  return res
+async def driver_login(data: models.Driver_Login):
+    res = await tasks.handle_driver_login(data)
+    return res
 
 
 @app.post("/register_pool_ride")
