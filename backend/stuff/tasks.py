@@ -199,10 +199,10 @@ async def handle_instant_ride_register(data: models.Instant_Ride_Register):
         instant_ids.append(each[0])
     while instant_id in instant_ids:
         instant_id = random.randint(1_000, 10_000)
-    mileage = 10  # dummy
+    mileage = 12  # dummy
     distance = 10  # dummy
-    cost_per_lit = 10  # dummy
-    distance = 10  # dummy
+    cost_per_lit = 100  # dummy
+    distance = 59  # dummy
     travel_time = 120  # dummy in minutes
     cost = await get_cost_per_person(distance, cost_per_lit, data.numpeople, mileage)
     conn, cursor = database.make_db()
@@ -240,7 +240,7 @@ async def driver_fetch_pool():
         for i in [2, 3, 4, 5]:
             if each[i] != -1:
                 strength += 1
-        cost = await  get_cost_per_person(10, 10, strength, 10)*strength
+        cost = await  get_cost_per_person(59, 100, strength, 12)*strength
         ride = {
             "master_pool_id": each[0],
             "strength":  strength,
@@ -291,7 +291,7 @@ async def driver_accept_pool(data: models.Accept_Pool_Ride):
             'start': "IIT Hyderabad",
             'end': res[0][1],
             'strength': res[0][6],
-            "cost": await get_cost_per_person(10, 10, res[0][6], 10)*res[0][6],
+            "cost": await get_cost_per_person(59, 100, res[0][6], 12)*res[0][6],
             "travel_time": 120
         }
     }
@@ -474,7 +474,7 @@ async def handle_get_my_pool_driver(data: models.My_Pool_Driver):
     conn.close()
     answer = {
         "strength": strength,
-        "cost": await get_cost_per_person(10, 10, strength, 10)*strength,
+        "cost": await get_cost_per_person(59, 100, strength, 12)*strength,
         "people": people_in_pool
     }
 
