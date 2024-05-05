@@ -30,6 +30,7 @@ async def handle_register(data: models.User_Register):
         'message': "Registration Successful",
     }
 
+
 async def handle_driver_register(data: models.Driver_Register):
     conn, cursor = database.make_db()
     """
@@ -272,7 +273,6 @@ async def handle_instant_ride_register(data: models.Instant_Ride_Register):
     }
 
 
-
 async def driver_fetch_pool():
     """
     - fetch all the pools from active_pools table and send
@@ -346,6 +346,7 @@ async def driver_accept_pool(data: models.Accept_Pool_Ride):
         }
     }
 
+
 async def driver_fetch_instant():
     """
     Fetch all the instant rides
@@ -382,6 +383,7 @@ async def driver_fetch_instant():
         'message': "Fetched all the instant rides",
         'instant': result
     }
+
 
 async def driver_accept_instant(data: models.Accept_Instant_Ride):
     """
@@ -425,8 +427,10 @@ async def driver_accept_instant(data: models.Accept_Instant_Ride):
     }
 
 
-
 async def handle_specific_pool(data: models.Specific_Pool):
+    """
+    Add the information of the other people in the pool as well
+    """
     conn, cursor = database.make_db()
     query = f"""
     select * from pool_applications where pool_id = {data.pool_id}
@@ -435,19 +439,65 @@ async def handle_specific_pool(data: models.Specific_Pool):
     results = cursor.fetchall()
     result = results[0]
     answer = {
-      "pool_id": data.pool_id,
-      "email": result[1],
-      "timeslot": result[2],
-      "zone": result[3],
-      "numpeople": result[4],
-      "min": result[5],
-      "max": result[6],
-      "time": result[7],
-      "date": result[8],
-      "start": result[9],
-      "destination": result[10]
+        "pool_id": data.pool_id,
+        "email": result[1],
+        "timeslot": result[2],
+        "zone": result[3],
+        "numpeople": result[4],
+        "min": result[5],
+        "max": result[6],
+        "time": result[7],
+        "date": result[8],
+        "start": result[9],
+        "destination": result[10]
     }
+    # getting all the other pools which have our pool_id
+    query = f"""
+    select * from active_pools where pool_id1 = {data.pool_id} or pool_id2 = {data.pool_id} or pool_id3 = {data.pool_id} or pool_id4 = {data.pool_id}
+    """
+    cursor.execute(query)
+    res = cursor.fetchall()
+    pool_ids = []
+    # for each in res:
+    #     if each != -1:
+    #         pool_ids.append(each)
+    master_pool_id = res[0][0]
+    for i in range(2, 6):
+        if res[0][i] != -1:
+            pool_ids.append(res[0][i])
+    # get all the emails of the people with the pool_ids
+    people_in_pool = []
+    for id in pool_ids:
+        query = f"""
+        select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+        """
+        cursor.execute(query)
+        result = cursor.fetchall()
+        person = {
+            "name": result[0][0],
+            "email": result[0][1],
+            "phone": result[0][2],
+            "photoURL": result[0][3]
+        }
+        people_in_pool.append(person)
+    answer['people'] = people_in_pool
+    # getting the driver details
+    query = f"""
+    select * from accept_pools natural join registered_drivers where master_pool_id = {master_pool_id}
+    """
+    driver = {
+        "email": res[0][0],
+        "master_pool_id": res[0][1],
+        "photoURL": res[0][3],
+        "name": res[0][4],
+        "phone": res[0][5],
+        "car_no": res[0][6],
+        "car_model": res[0][7]
+    }
+    answer['driver'] = driver
+    conn.close()
     return answer
+
 
 async def handle_get_my_pool_customer(data: models.My_Pool_Customer):
     conn, cursor = database.make_db()
