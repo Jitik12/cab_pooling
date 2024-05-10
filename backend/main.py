@@ -28,8 +28,11 @@ async def register(data: models.User_Register):
   
 @app.post("/driver_register")
 async def driver_register(data: models.Driver_Register):
-    res = await tasks.handle_driver_register(data)
-    return res
+    try:
+        res = await tasks.handle_driver_register(data)
+        return res
+    except Exception as e:
+        return e
   
 
 
