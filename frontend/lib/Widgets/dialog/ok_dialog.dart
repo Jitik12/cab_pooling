@@ -1,6 +1,5 @@
 import 'package:CabX/Widgets/dialog/generic_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:CabX/Widgets/dialog/generic_dialog.dart';
 
 Future<void> showOkDialog({
   required BuildContext context,

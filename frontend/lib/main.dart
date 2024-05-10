@@ -14,7 +14,6 @@ import 'package:CabX/Views/payment_details.dart';
 import 'package:CabX/Views/ride_details.dart';
 import 'package:CabX/Views/splash_screen.dart';
 import 'package:flutter/material.dart';
-
 import 'constants/routes.dart';
 
 
