@@ -32,6 +32,7 @@ async def driver_register(data: models.Driver_Register):
         res = await tasks.handle_driver_register(data)
         return res
     except Exception as e:
+        print("hello")
         return e
   
 
