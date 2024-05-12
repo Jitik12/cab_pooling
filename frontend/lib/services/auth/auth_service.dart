@@ -1,7 +1,9 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:developer' as devtools;
-
 
 class AuthService /*implements AuthProviderClass*/ {
   static final AuthService _shared = AuthService._sharedInstance();
@@ -37,16 +39,32 @@ class AuthService /*implements AuthProviderClass*/ {
   );
 
   GoogleSignInAccount? get currentUser => _googleSignIn.currentUser;
-
+  FirebaseAuth auth = FirebaseAuth.instance;
   Future<bool> signInWithGoogle() async {
     try {
       if (currentUser != null) {
-        return true;;
+        return true;
       }
 
-      await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      print(googleUser);
+
+      if (googleUser == null) {
+        return false;
+      }
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential authResult = await auth.signInWithCredential(credential);
       return true;
     } catch (error) {
+      debugPrint("ERROR WHILE LOGIN: ${error.toString()}");
       return false;
     }
   }

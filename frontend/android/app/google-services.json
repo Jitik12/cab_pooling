@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1063757712434",
+    "project_id": "cab-pooling-50cbe",
+    "storage_bucket": "cab-pooling-50cbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063757712434:android:1becfe8c4be31e54e0c02b",
+        "android_client_info": {
+          "package_name": "com.example.swift_street"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjEaLcP2UBPItfI8Pz6WTbFv7bwongxrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,11 +7,10 @@ import 'package:CabX/data/BackendUser.dart';
 import 'package:CabX/data/CabPoolRequest.dart';
 
 class BackendService {
-
   static final BackendService _shared = BackendService._sharedInstance();
   BackendService._sharedInstance();
   factory BackendService() => _shared;
-
+  String backendUrl = "https://dhruvin-cabs.jitik.online:8000";
   Future<void> registerUser(GoogleSignInAccount user) async {
     // Register user with backend
     try {
