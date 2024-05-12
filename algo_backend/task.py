@@ -17,10 +17,11 @@ async def make_pool():
     for zone in zones:
         print(f"ZONE : {zone}")
         query = f"""
-        select * from pool_applications where zone = '{zone}'
+        select * from pool_applications where zone = '{zone} and pooled = {False}'
         """
         cursor.execute(query)
         res = cursor.fetchall()
+        print(res)
         my_people = []
         for each in res:
             my_people.append(Person(each[5], each[6], each[4], each[0]))

@@ -48,7 +48,7 @@ async def handle_driver_register(data: models.Driver_Register):
             'status': 500
         }
     query = f"""
-    insert into drivers values ('{data.email}','{hashlib.sha256((data.password).encode()).hexdigest()}',, '{data.photoURL}', '{data.name}', '{data.phone}', '{data.car_no}', '{data.car_model}')
+    insert into drivers values ('{data.email}','{hashlib.sha256((data.password).encode()).hexdigest()}', '{data.photoURL}', '{data.name}', '{data.phone}', '{data.car_no}', '{data.car_model}')
     """
     cursor.execute(query)
     conn.commit()
@@ -181,27 +181,38 @@ async def handle_login_via_token(data: models.User_Login_Token):
 
 async def handle_driver_login(data: models.Driver_Login):
     conn, cursor = database.make_db()
-    query = f"""
+    query1 = f"""
     select * from drivers where email = '{data.email}' and password = '{hashlib.sha256((data.password).encode()).hexdigest()}'
     """
-    cursor.execute(query)
-    res = cursor.fetchall()
-    if len(res) == 0:
+    
+    query2 = f"""
+    select * from drivers where email = '{data.email}'
+    """
+    cursor.execute(query2)
+    res2 = cursor.fetchall()
+    if len(res2) == 0:
         return {
             'message': "Driver does not exist. Please register first",
             'status': 404
         }
-    else:
+    
+    cursor.execute(query1)
+    res = cursor.fetchall()
+    if len(res2) != 0 and len(res) == 0:
         return {
-            'message': "Driver exists",
-            'status': 200,
-            'email': res[0][0],
-            'photoURL': res[0][2],
-            'name': res[0][3],
-            'phone': res[0][4],
-            'car_no': res[0][5],
-            'car_model': res[0][6]
+            'message' : 'Wrong Password',
+            'status' : '400'
         }
+    return {
+        'message': "Driver exists",
+        'status': 200,
+        'email': res[0][0],
+        'photoURL': res[0][2],
+        'name': res[0][3],
+        'phone': res[0][4],
+        'car_no': res[0][5],
+        'car_model': res[0][6]
+    }
 
 
 async def handle_pool_ride_register(data: models.Pool_Ride_Register):
@@ -282,7 +293,9 @@ async def driver_fetch_pool():
     select * from active_pools
     """
     cursor.execute(query)
+    
     res = cursor.fetchall()
+    print(res)
     result = []
     for each in res:
         strength = 0
@@ -500,49 +513,62 @@ async def handle_specific_pool(data: models.Specific_Pool):
 
 
 async def handle_get_my_pool_customer(data: models.My_Pool_Customer):
-    conn, cursor = database.make_db()
-    query = f"""
-    select pool_id from pool_applications where email = '{data.email}'
-    """
-    cursor.execute(query)
-    pool_id = cursor.fetchall()
-    pool_id = pool_id[0][0]
-    # getting all the other pools which have our pool_id
-    query = f"""
-    select * from active_pools where pool_id1 = {pool_id} or pool_id2 = {pool_id} or pool_id3 = {pool_id} or pool_id4 = {pool_id}
-    """
-    cursor.execute(query)
-    res = cursor.fetchall()
-    strength = res[0][6]
-    zone = res[0][1]
-    pools = []
-    for i in range(2, 6):
-        if res[0][i] != -1:
-            pools.append(res[0][i])
-
-    people_in_pool = []
-    for id in pools:
+    try:
+        conn, cursor = database.make_db()
         query = f"""
-        select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+        select pool_id from pool_applications where email = '{data.email}'
         """
         cursor.execute(query)
-        result = cursor.fetchall()
-        person = {
-            "name": result[0][0],
-            "email": result[0][1],
-            "phone": result[0][2],
-            "photoURL": result[0][3]
-        }
-        people_in_pool.append(person)
-    conn.close()
-    answer = {
-        "pool_id": pool_id,
-        "strength": strength,
-        "zone": zone,
-        "people": people_in_pool
-    }
-    return answer
+        pool_ids = cursor.fetchall()
+        answers = []
+        for i in range(len(pool_ids)):
+            pool_id = pool_ids[0][i]
+            print(pool_id)
+            # getting all the other pools which have our pool_id
+            query = f"""
+            select * from active_pools where pool_id1 = {pool_id} or pool_id2 = {pool_id} or pool_id3 = {pool_id} or pool_id4 = {pool_id}
+            """
+            cursor.execute(query)
+            res = cursor.fetchall()
+            if len(res) == 0:
+                return {
+                    'message' : 'No pool created yet',
+                    'code' : 450
+                }
+            print(res)
+            strength = res[0][6]
+            zone = res[0][1]
+            pools = []
+            for i in range(2, 6):
+                if res[0][i] != -1:
+                    pools.append(res[0][i])
 
+            people_in_pool = []
+            for id in pools:
+                query = f"""
+                select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+                """
+                cursor.execute(query)
+                result = cursor.fetchall()
+                person = {
+                    "name": result[0][0],
+                    "email": result[0][1],
+                    "phone": result[0][2],
+                    "photoURL": result[0][3]
+                }
+                people_in_pool.append(person)
+            conn.close()
+            answer = {
+                "pool_id": pool_id,
+                "strength": strength,
+                "zone": zone,
+                "people": people_in_pool
+            }
+            answers.append()
+        return answers
+    except Exception as e:
+        print(e)
+        return {'message' : "Internal Server Error"}
 
 async def handle_get_my_pool_driver(data: models.My_Pool_Driver):
     conn, cursor = database.make_db()

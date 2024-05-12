@@ -94,7 +94,6 @@ async def driver_accept_instant(data: models.Accept_Instant_Ride):
     res = await tasks.driver_accept_instant(data)
     return res
 
-
 @app.post("/specific_pool")
 async def get_specific_pool(data: models.Specific_Pool):
     res = await tasks.handle_specific_pool(data)
