@@ -201,16 +201,28 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
               Uri url = Uri.parse("$backendUrl/register_pool_ride");
 
               // Make the POST request
-              print(jsonEncode(requestBody));
+              print("Making a new pool request");
               http.Response response = await http.post(
                 url,
                 body: jsonEncode(requestBody),
+                headers: {
+                  "Content-Type": "application/json",
+                },
               );
 
               // Check the response status
               if (response.statusCode == 200) {
-                // Request successful, navigate to the review page
-                Navigator.of(context).pushNamed(tripPoolingReviewPage);
+                // Adding the cab details here => [estimated cost, travel time] and [pickup point, timeslot]
+
+                Map<String, dynamic> responseData = jsonDecode(response.body);
+                Map<String, dynamic> cabDetails = {
+                  "estimated_price": responseData["cost"],
+                  "time": responseData["time"],
+                  "pool_id": responseData["pool_id"],
+                  "start": cabPoolRequest.start,
+                  "destination": cabPoolRequest.destination
+                };
+                Navigator.of(context).pushNamed(tripPoolingReviewPage, arguments: cabDetails);
               } else {
                 // Request failed, show an error dialog
                 await showOkDialog(

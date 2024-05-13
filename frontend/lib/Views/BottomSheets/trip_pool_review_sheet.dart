@@ -6,14 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class TripPoolReviewSheet extends StatelessWidget {
-  Map<String, dynamic> cabDetails = {
-    "Expected Price": "Rs 2000.00",
-    "Travel Time": "1500 hr",
-    "Pickup Point": "Kathmandu",
-    "Time Slot": "1:30 - 3:30",
-  };
-  TripPoolReviewSheet({super.key});
-  final price = 2000;
+  // Map<String, dynamic> cabDetails = {
+  //   "Expected Price": "Rs 2000.00",
+  //   "Travel Time": "1500 hr",
+  //   "Pickup Point": "Kathmandu",
+  //   "Time Slot": "1:30 - 3:30",
+  // };
+  // TripPoolReviewSheet({super.key});
+  // final price = 2000;
+  final Map<String, dynamic> cabDetails;
+
+  const TripPoolReviewSheet({Key? key, required this.cabDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,7 @@ class TripPoolReviewSheet extends StatelessWidget {
               return false;
             });
           },
-          title: 'Book the Ride',
+          title: 'Ride Booked',
         )
       ],
     );

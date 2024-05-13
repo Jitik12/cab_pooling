@@ -14,8 +14,9 @@ Widget googleSignInButton(BuildContext context) {
       onPressed: () async {
         try {
           AuthService().signInWithGoogle().then((value) {
-            if (value)
+            if (value){
               Navigator.pushReplacementNamed(context, homeRoute);
+            }
             else {
               showOkDialog(
                   context: context,
