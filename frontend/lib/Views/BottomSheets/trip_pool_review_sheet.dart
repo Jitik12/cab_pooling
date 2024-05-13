@@ -14,12 +14,14 @@ class TripPoolReviewSheet extends StatelessWidget {
   // };
   // TripPoolReviewSheet({super.key});
   // final price = 2000;
-  final Map<String, dynamic> cabDetails;
+  // final Map<String, dynamic> cabDetails;
 
-  const TripPoolReviewSheet({Key? key, required this.cabDetails}) : super(key: key);
+  const TripPoolReviewSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> cabDetails =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final rows = List.from(
       cabDetails.entries.map(
         (e) => Padding(
