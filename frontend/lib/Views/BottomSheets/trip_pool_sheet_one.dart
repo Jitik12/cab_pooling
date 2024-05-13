@@ -12,6 +12,7 @@ import 'package:CabX/enums/time_slot.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 
 class TripPoolSheetOne extends StatefulWidget {
@@ -118,16 +119,16 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
           height: 15,
         ),
         Row(children: [
-          CustomizedPopUpMenu<TimeSlot>(
+          CustomizedPopUpMenu<int>(
             text: 'Time Slot',
             value: cabPoolRequest.timeSlot,
-            options: TimeSlot.values,
+            options: List.generate(24, (index) => index), // Options from 0 to 23
             onOptionSelected: (value) {
               setState(() {
                 cabPoolRequest.timeSlot = value;
               });
             },
-            getLabel: (value) => value.value,
+            getLabel: (value) => '$value:00',
           ),
           const SizedBox(width: 16),
           Padding(
@@ -185,8 +186,47 @@ class _TripPoolSheetOneState extends State<TripPoolSheetOne> {
               );
               return;
             }
+            // Armaan : Creating a pool request to the server
+            cabPoolRequest.start = startController.text;
+            cabPoolRequest.destination = destinationController.text;
 
-            Navigator.of(context).pushNamed(tripPoolingReviewPage);
+            Map<String, dynamic> requestBody = cabPoolRequest.toJsonForRegister();
+
+            // Make the POST request
+            try {
+              String backendUrl = "https://dhruvin-cabs.jitik.online:8000";
+              print(backendUrl);
+              // Define your server URL
+              Uri url = Uri.parse(backendUrl);
+
+              // Make the POST request
+              http.Response response = await http.post(
+                url,
+                body: requestBody,
+              );
+
+              // Check the response status
+              if (response.statusCode == 200) {
+                // Request successful, navigate to the review page
+                Navigator.of(context).pushNamed(tripPoolingReviewPage);
+              } else {
+                // Request failed, show an error dialog
+                await showOkDialog(
+                  context: context,
+                  title: 'Error',
+                  content: 'An error occurred while processing your request. Please try again later.',
+                );
+              }
+            } catch (e) {
+              // Handle any errors that occur during the request
+              print('Error making request: $e');
+              await showOkDialog(
+                context: context,
+                title: 'Error',
+                content: 'An error occurred while processing your request. Please try again later.',
+              );
+            }
+
           },
           title: 'Book the Ride',
         )
