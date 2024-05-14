@@ -519,62 +519,97 @@ async def handle_specific_pool(data: models.Specific_Pool):
 
 
 async def handle_get_my_pool_customer(data: models.My_Pool_Customer):
-    try:
-        conn, cursor = database.make_db()
-        query = f"""
-        select pool_id from pool_applications where email = '{data.email}'
-        """
-        cursor.execute(query)
-        pool_ids = cursor.fetchall()
-        answers = []
-        for i in range(len(pool_ids)):
-            pool_id = pool_ids[0][i]
-            print(pool_id)
-            # getting all the other pools which have our pool_id
-            query = f"""
-            select * from active_pools where pool_id1 = {pool_id} or pool_id2 = {pool_id} or pool_id3 = {pool_id} or pool_id4 = {pool_id}
-            """
-            cursor.execute(query)
-            res = cursor.fetchall()
-            if len(res) == 0:
-                return {
-                    'message' : 'No pool created yet',
-                    'code' : 450
-                }
-            print(res)
-            strength = res[0][6]
-            zone = res[0][1]
-            pools = []
-            for i in range(2, 6):
-                if res[0][i] != -1:
-                    pools.append(res[0][i])
+    # Get all the pools which have this particular email and return all the data that is there in the pool_applications table
+    conn, cursor = database.make_db()
+    query = f"""
+    select * from pool_applications where email = '{data.email}'
+    """
+    cursor.execute(query)
+    res = cursor.fetchall()
+    if len(res) == 0:
+        return {
+            'message': "No pool created yet",
+            'code': 450
+        }
+    result = []
+    for each in res:
+        answer = {
+            "pool_id": each[0],
+            "timeslot": each[2],
+            "zone": each[3],
+            "numpeople": each[4],
+            "min": each[5],
+            "max": each[6],
+            "time": each[7],
+            "date": each[8],
+            "start": each[9],
+            "destination": each[10]
+        }
+        result.append(answer)
+    conn.close()
+    return result
 
-            people_in_pool = []
-            for id in pools:
-                query = f"""
-                select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
-                """
-                cursor.execute(query)
-                result = cursor.fetchall()
-                person = {
-                    "name": result[0][0],
-                    "email": result[0][1],
-                    "phone": result[0][2],
-                    "photoURL": result[0][3]
-                }
-                people_in_pool.append(person)
-            conn.close()
-            answer = {
-                "pool_id": pool_id,
-                "strength": strength,
-                "zone": zone,
-                "people": people_in_pool
-            }
-            answers.append()
-        return answers
-    except Exception as e:
-        print(e)
-        return {'message' : "Internal Server Error"}
+
+
+
+
+# async def handle_get_my_pool_customer(data: models.My_Pool_Customer):
+#     try:
+#         conn, cursor = database.make_db()
+#         query = f"""
+#         select pool_id from pool_applications where email = '{data.email}'
+#         """
+#         cursor.execute(query)
+#         pool_ids = cursor.fetchall()
+#         answers = []
+#         for i in range(len(pool_ids)):
+#             pool_id = pool_ids[0][i]
+#             print(pool_id)
+#             # getting all the other pools which have our pool_id
+#             query = f"""
+#             select * from active_pools where pool_id1 = {pool_id} or pool_id2 = {pool_id} or pool_id3 = {pool_id} or pool_id4 = {pool_id}
+#             """
+#             cursor.execute(query)
+#             res = cursor.fetchall()
+#             if len(res) == 0:
+#                 return {
+#                     'message' : 'No pool created yet',
+#                     'code' : 450
+#                 }
+#             print(res)
+#             strength = res[0][6]
+#             zone = res[0][1]
+#             pools = []
+#             for i in range(2, 6):
+#                 if res[0][i] != -1:
+#                     pools.append(res[0][i])
+#
+#             people_in_pool = []
+#             for id in pools:
+#                 query = f"""
+#                 select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+#                 """
+#                 cursor.execute(query)
+#                 result = cursor.fetchall()
+#                 person = {
+#                     "name": result[0][0],
+#                     "email": result[0][1],
+#                     "phone": result[0][2],
+#                     "photoURL": result[0][3]
+#                 }
+#                 people_in_pool.append(person)
+#             conn.close()
+#             answer = {
+#                 "pool_id": pool_id,
+#                 "strength": strength,
+#                 "zone": zone,
+#                 "people": people_in_pool
+#             }
+#             answers.append()
+#         return answers
+#     except Exception as e:
+#         print(e)
+#         return {'message' : "Internal Server Error"}
 
 async def handle_get_my_pool_driver(data: models.My_Pool_Driver):
     conn, cursor = database.make_db()
