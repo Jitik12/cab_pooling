@@ -238,9 +238,16 @@ async def handle_pool_ride_register(data: models.Pool_Ride_Register):
     cursor.execute(query)
     conn.commit()
     conn.close()
+    distance = 59
+    mileage = 12
+    cost_per_lit = 100
+    travel_time = 120
+    cost = await get_cost_per_person(distance, cost_per_lit, data.numpeople, mileage)*(data.numpeople)
     return {
         'message': "Added pool to the database",
-        'pool_id': pool_id
+        'pool_id': pool_id,
+        'cost': cost,
+        'time': travel_time
     }
 
 
@@ -262,7 +269,6 @@ async def handle_instant_ride_register(data: models.Instant_Ride_Register):
     while instant_id in instant_ids:
         instant_id = random.randint(1_000, 10_000)
     mileage = 12  # dummy
-    distance = 10  # dummy
     cost_per_lit = 100  # dummy
     distance = 59  # dummy
     travel_time = 120  # dummy in minutes
@@ -496,7 +502,7 @@ async def handle_specific_pool(data: models.Specific_Pool):
     answer['people'] = people_in_pool
     # getting the driver details
     query = f"""
-    select * from accept_pools natural join registered_drivers where master_pool_id = {master_pool_id}
+    select * from accept_pools natural join drivers where master_pool_id = {master_pool_id}
     """
     driver = {
         "email": res[0][0],

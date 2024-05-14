@@ -38,15 +38,15 @@ class Driver_Login(BaseModel):
     password: str
 
 class Pool_Ride_Register(BaseModel):
-    email: str
-    timeslot: int
-    zone: str
-    numpeople: int
-    min: int
-    max: int
+    email: str # sorted
+    timeslot: int   # sorted
+    zone: str # sorted
+    numpeople: int # taken
+    min: int # sorted
+    max: int # sorted
     time: str
     date: str
-    start: str
+    start: str 
     destination: str
 
 class Accept_Pool_Ride(BaseModel):

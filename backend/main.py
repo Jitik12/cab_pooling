@@ -63,7 +63,9 @@ async def driver_login(data: models.Driver_Login):
 
 @app.post("/register_pool_ride")
 async def register_pool_ride(data: models.Pool_Ride_Register):
+    print(data)
     res = await tasks.handle_pool_ride_register(data)
+    print(res)
     return res
 
 
