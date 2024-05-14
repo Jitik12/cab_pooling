@@ -62,7 +62,7 @@ class _BookingSectionState extends State<BookingSection> {
           time: DateFormat("yyyy-MM-dd hh:mm a").parse("${ride['date']} ${ride['time']}"),
           imagePath: 'assets/images/home_section/location.png',
           onTap: () {
-            Navigator.of(context).pushNamed(rideDetails);
+            Navigator.of(context).pushNamed(rideDetails, arguments: ride['pool_id']);
           },
         );
       },
