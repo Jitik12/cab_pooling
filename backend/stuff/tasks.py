@@ -477,9 +477,6 @@ async def handle_specific_pool(data: models.Specific_Pool):
     cursor.execute(query)
     res = cursor.fetchall()
     pool_ids = []
-    # for each in res:
-    #     if each != -1:
-    #         pool_ids.append(each)
     master_pool_id = res[0][0]
     for i in range(2, 6):
         if res[0][i] != -1:
@@ -490,8 +487,11 @@ async def handle_specific_pool(data: models.Specific_Pool):
         query = f"""
         select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
         """
+        print(query)
         cursor.execute(query)
         result = cursor.fetchall()
+        if len(result) == 0:
+          continue
         person = {
             "name": result[0][0],
             "email": result[0][1],
@@ -504,15 +504,28 @@ async def handle_specific_pool(data: models.Specific_Pool):
     query = f"""
     select * from accept_pools natural join drivers where master_pool_id = {master_pool_id}
     """
-    driver = {
-        "email": res[0][0],
-        "master_pool_id": res[0][1],
-        "photoURL": res[0][3],
-        "name": res[0][4],
-        "phone": res[0][5],
-        "car_no": res[0][6],
-        "car_model": res[0][7]
-    }
+    cursor.execute(query)
+    res = cursor.fetchall()
+    if len(res) == 0:
+      driver = {
+        "email": "YET TO ACCEPT",
+        "master_pool_id": master_pool_id,
+        "photoURL": "YET TO ACCEPT",
+        "name": "YET TO ACCEPT",
+        "phone": "YET TO ACCEPT",
+        "car_no": "YET TO ACCEPT",
+        "car_model": "YET TO ACCEPT"
+      }
+    else:
+      driver = {
+          "email": res[0][0],
+          "master_pool_id": res[0][1],
+          "photoURL": res[0][3],
+          "name": res[0][4],
+          "phone": res[0][5],
+          "car_no": res[0][6],
+          "car_model": res[0][7]
+      }
     answer['driver'] = driver
     conn.close()
     return answer
