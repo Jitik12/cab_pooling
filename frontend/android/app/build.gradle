@@ -67,7 +67,7 @@ android {
             storePassword 'android'  // Using the same store password as in debug
             keyAlias 'androiddebugkey'  // Using the same key alias as in debug
             keyPassword 'android'  // Using the same key password as in debug
-        }
+  }
 }
     buildTypes {
         debug {

@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:CabX/Widgets/bookings_card.dart';
 import 'package:CabX/Widgets/heading_with_more.dart';
 import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:CabX/services/auth/auth_service.dart';
+import 'package:intl/intl.dart';
 
 class BookingSection extends StatefulWidget {
-  const BookingSection({super.key});
+  const BookingSection({Key? key}) : super(key: key);
 
   @override
   State<BookingSection> createState() => _BookingSectionState();
@@ -13,80 +18,53 @@ class BookingSection extends StatefulWidget {
 class _BookingSectionState extends State<BookingSection> {
   final int _upcomingNum = 4;
   final int _historyNum = 2;
+  final String backend_url = "https://dhruvin-cabs.jitik.online:8000";
 
-  // Boolean flags to control visibility
-  bool _showUpcomingBookings = false;
-  bool _showHistoryBookings = false;
+  List<Map<String, dynamic>> upcomingRides = [];
+  String auth_email = AuthService().currentUser!.email;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUpcomingRides(auth_email);
+  }
+
+  Future<void> fetchUpcomingRides(String email) async {
+    try {
+      Map<String, dynamic> requestData = {"email": email};
+      final response = await http.post(
+        Uri.parse("$backend_url/get_my_pool_customer"),
+        body: jsonEncode(requestData),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          upcomingRides = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+        });
+      } else {
+        throw Exception('Failed to fetch upcoming rides');
+      }
+    } catch (e) {
+      print('Error fetching upcoming rides: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: 2 + _upcomingNum + _historyNum,
+    return ListView.builder(
+      itemCount: upcomingRides.length,
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return HeadingWithMore(
-            count: _upcomingNum,
-            heading: 'Upcoming',
-            onPressed: () {
-              setState(() {
-                _showUpcomingBookings = !_showUpcomingBookings;
-              });
-            },
-          );
-        } else if (index == _upcomingNum + 1) {
-          return HeadingWithMore(
-            count: _historyNum,
-            heading: 'History',
-            onPressed: () {
-              setState(() {
-                _showHistoryBookings = !_showHistoryBookings;
-              });
-            },
-          );
-        } else if (index <= _upcomingNum) {
-          return Visibility(
-            visible: _showUpcomingBookings || index == 1,
-            child: getBookingCard(
-                destination: 'Secunderabad Railway Station',
-                pickup: 'IIT Hyderabad',
-                time: DateTime(1969, 7, 20, 20, 18, 04),
-                imagePath: 'assets/images/home_section/location.png',
-                onTap: () {
-                  Navigator.of(context).pushNamed(rideDetails);
-                }),
-          );
-        } else {
-          return Visibility(
-            visible: _showHistoryBookings || index == _upcomingNum + 2,
-            child: getBookingCard(
-                destination: 'RGIA Hyderabad',
-                pickup: 'IIT Hyderabad',
-                time: DateTime(1969, 7, 20, 20, 18, 04),
-                imagePath: 'assets/images/home_section/location.png',
-                onTap: () {
-                  Navigator.of(context).pushNamed(rideDetails);
-                }),
-          );
-        }
-      },
-      separatorBuilder: (context, index) {
-        if (index <= _upcomingNum && _showUpcomingBookings) {
-          return const SizedBox(height: 10);
-        }
-        if (index <= _upcomingNum + _historyNum + 1 &&
-            index >= _upcomingNum + 2 &&
-            _showHistoryBookings) {
-          return const SizedBox(height: 10);
-        }
-
-        if (!_showUpcomingBookings && index == 1) {
-          return const SizedBox(height: 10);
-        }
-
-        if (!_showHistoryBookings && index == _upcomingNum + 2) {
-          return const SizedBox(height: 10);
-        }
-        return const SizedBox(height: 0);
+        final ride = upcomingRides[index];
+        return getBookingCard(
+          destination: ride['destination'],
+          pickup: ride['start'],
+          time: DateFormat("yyyy-MM-dd hh:mm a").parse("${ride['date']} ${ride['time']}"),
+          imagePath: 'assets/images/home_section/location.png',
+          onTap: () {
+            Navigator.of(context).pushNamed(rideDetails);
+          },
+        );
       },
     );
   }

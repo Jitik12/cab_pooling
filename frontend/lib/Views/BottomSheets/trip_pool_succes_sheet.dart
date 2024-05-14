@@ -48,7 +48,7 @@ class TripPoolSuccessSheet extends StatelessWidget {
       ),
       Center(
         child: Text(
-          '1. You will be notified of the pooling within 1 hr of departure.',
+          '1. You will be notified of the Pool you would be in. ',
           style: GoogleFonts.poppins(
             fontSize: 11,
             fontWeight: FontWeight.w400,
@@ -93,7 +93,7 @@ class TripPoolSuccessSheet extends StatelessWidget {
             return false;
           });
         },
-        title: 'Ride Details',
+        title: 'Home',
       ),
     ]);
   }

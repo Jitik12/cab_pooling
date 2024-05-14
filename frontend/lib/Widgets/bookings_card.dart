@@ -10,9 +10,7 @@ Widget getBookingCard({
   required Function() onTap,
 }) {
   return InkWell(
-    onTap: () {
-      onTap();
-    },
+    onTap: onTap,
     borderRadius: BorderRadius.circular(20),
     child: Container(
       decoration: BoxDecoration(
@@ -59,15 +57,20 @@ Widget getBookingCard({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('12:00 PM',
-                    style: GoogleFonts.poppins(
-                      color: blackColor,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w500,
-                    )),
+                Text(
+                  '${time.hour}:${time.minute.toString().padLeft(2, '0')} ${time.hour >= 12 ? 'PM' : 'AM'}', // Format time
+                  style: GoogleFonts.poppins(
+                    color: blackColor,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 const SizedBox(width: 10),
-                const Icon(Icons.arrow_forward_rounded,
-                    color: blackColor, size: 24.0),
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: blackColor,
+                  size: 24.0,
+                ),
               ],
             ),
           ],

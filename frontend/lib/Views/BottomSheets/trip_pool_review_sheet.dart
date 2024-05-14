@@ -4,27 +4,16 @@ import 'package:CabX/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// ignore: must_be_immutable
 class TripPoolReviewSheet extends StatelessWidget {
-  // Map<String, dynamic> cabDetails = {
-  //   "Expected Price": "Rs 2000.00",
-  //   "Travel Time": "1500 hr",
-  //   "Pickup Point": "Kathmandu",
-  //   "Time Slot": "1:30 - 3:30",
-  // };
-  // TripPoolReviewSheet({super.key});
-  // final price = 2000;
-  // final Map<String, dynamic> cabDetails;
-
   const TripPoolReviewSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> cabDetails =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final rows = List.from(
       cabDetails.entries.map(
-        (e) => Padding(
+            (e) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: getReviewRow(
             name: e.key,
@@ -52,7 +41,7 @@ class TripPoolReviewSheet extends StatelessWidget {
           height: 10,
         ),
         const Text(
-          'Price will be calculated based on the number of passengers and wil be confirmed with you before the ride',
+          'Price will be calculated based on the number of passengers and will be confirmed with you before the ride',
           style: TextStyle(
               fontSize: 12, color: Color.fromARGB(255, 163, 157, 157)),
         ),
@@ -60,17 +49,11 @@ class TripPoolReviewSheet extends StatelessWidget {
           height: 20,
         ),
         GreenButton(
-          onPressed: () async {
-            Navigator.pushNamedAndRemoveUntil(context, tripPoolConfirmationPage,
-                (route) {
-              if (route.settings.name == homeRoute) {
-                return true;
-              }
-              return false;
-            });
+          onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false);
           },
           title: 'Ride Booked',
-        )
+        ),
       ],
     );
   }
