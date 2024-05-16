@@ -24,7 +24,6 @@ class _RideDetailsState extends State<RideDetails> {
   Map<String, dynamic> rideDetails = {};
   late Future<Map<String, dynamic>> _rideDetailsFuture;
 
-
   @override
   void initState() {
     super.initState();
@@ -45,7 +44,6 @@ class _RideDetailsState extends State<RideDetails> {
     url = Uri.parse("$backendUrl/specific_pool");
     fetchData(poolId, url);
   }
-
 
   Future<Map<String, dynamic>> fetchData(int poolId, Uri url) async {
     try {
@@ -104,100 +102,110 @@ class _RideDetailsState extends State<RideDetails> {
             rideDetails = snapshot.data ?? {};
             return Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (rideDetails['start'] != null)
-                            Text(
-                              'Start: ${rideDetails['start']}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 24,
-                                color: blueShade,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (rideDetails['start'] != null)
+                              Flexible(
+                                child: Text(
+                                  'Start: ${rideDetails['start']}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24,
+                                    color: blueShade,
+                                  ),
+                                ),
                               ),
-                            ),
-                          if (rideDetails['destination'] != null)
-                            Text(
-                              'End: ${rideDetails['destination']}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 18,
-                                color: blueShade,
+                            if (rideDetails['destination'] != null)
+                              Flexible(
+                                child: Text(
+                                  'End: ${rideDetails['destination']}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: blueShade,
+                                  ),
+                                ),
                               ),
-                            ),
-                        ],
-                      ),
-                      const Icon(
-                        Icons.share,
-                        size: 24.0,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/ride_details_img.png',
-                      width: double.infinity,
+                          ],
+                        ),
+                        const Icon(
+                          Icons.share,
+                          size: 24.0,
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  if (rideDetails['driver'] != null)
-                    DriverDetailsWidget(
-                      driverDetails: DriverDetails(
-                        name: rideDetails['driver']['name'],
-                        phone: rideDetails['driver']['phone'],
-                        vehicleNumber: rideDetails['driver']['car_no'],
-                        vehicleMake: rideDetails['driver']['car_model'],
+                    SizedBox(height: 20),
+                    Center(
+                      child: Image.asset(
+                        'assets/images/ride_details_img.png',
+                        width: double.infinity,
                       ),
                     ),
-                  SizedBox(height: 15),
-                  Text(
-                    'Trip Details',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
+                    SizedBox(height: 10),
+                    if (rideDetails['driver'] != null)
+                      DriverDetailsWidget(
+                        driverDetails: DriverDetails(
+                          name: rideDetails['driver']['name'],
+                          phone: rideDetails['driver']['phone'],
+                          vehicleNumber: rideDetails['driver']['car_no'],
+                          vehicleMake: rideDetails['driver']['car_model'],
+                        ),
+                      ),
+                    SizedBox(height: 15),
+                    Text(
+                      'Trip Details',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 15),
-                  getReviewRow(name: 'Price', value: "2000"),
-                  SizedBox(height: 18),
-                  if (rideDetails['date'] != null)
-                    getReviewRow(name: 'Date', value: rideDetails['date']),
-                  SizedBox(height: 10),
-                  if (rideDetails['time'] != null)
-                    getReviewRow(name: 'Time', value: rideDetails['time']),
-                  SizedBox(height: 15),
-                  Text(
-                    'Passengers',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
+                    SizedBox(height: 15),
+                    getReviewRow(name: 'Price', value: "2000"),
+                    SizedBox(height: 18),
+                    if (rideDetails['date'] != null)
+                      getReviewRow(name: 'Date', value: rideDetails['date']),
+                    SizedBox(height: 10),
+                    if (rideDetails['time'] != null)
+                      getReviewRow(name: 'Time', value: rideDetails['time']),
+                    SizedBox(height: 15),
+                    Text(
+                      'Passengers',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 15),
-                  if (rideDetails['people'] != null)
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: rideDetails['people'].length,
-                      itemBuilder: (context, index) {
-                        final passenger = rideDetails['people'][index];
-                        return ListTile(
-                          title: Text(passenger['name'] ?? ''),
-                          subtitle: Text(passenger['phone'] ?? ''),
-                          leading: CircleAvatar(
-                            backgroundImage:
-                            NetworkImage(passenger['photoURL'] ?? ''),
-                          ),
-                        );
-                      },
-                    ),
-                ],
+                    SizedBox(height: 15),
+                    if (rideDetails['people'] != null)
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: rideDetails['people'].length,
+                          itemBuilder: (context, index) {
+                            final passenger = rideDetails['people'][index];
+                            return ListTile(
+                              title: Text(passenger['name'] ?? ''),
+                              subtitle: Text(passenger['phone'] ?? ''),
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(passenger['photoURL'] ?? ''),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                  ],
+                ),
               ),
             );
           }
