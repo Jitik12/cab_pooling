@@ -13,11 +13,11 @@ async def make_pool():
         - Then move to the next zone
     - If no people then move to the next zone
     """
-    zones = ['RGAI', 'Miyaour', 'Hitex', 'Gachibowli', 'Charminar']
+    zones = ['RGAI', 'Miyapur', 'Hitex', 'Gachibowli', 'Charminar']
     for zone in zones:
         print(f"ZONE : {zone}")
         query = f"""
-        select * from pool_applications where zone = '{zone} and pooled = {False}'
+        select * from pool_applications where zone = '{zone}' and pooled = FALSE order by numpeople desc
         """
         cursor.execute(query)
         res = cursor.fetchall()
@@ -26,7 +26,6 @@ async def make_pool():
         for each in res:
             my_people.append(Person(each[5], each[6], each[4], each[0]))
         print("## RES ##")
-        print(res)
         print("## RES END ##")
         if len(res) > 1:
             # Start pooling

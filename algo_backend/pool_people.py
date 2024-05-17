@@ -30,14 +30,14 @@ async def add_curr_pool(curr_pool: List[Person], curr_strength: int, zone: str, 
       print("Already Added")
       return
     insert_query = f"""
-    insert into active_pools values ({master_pool_id}, '{zone}', {pool_ids[0]}, {pool_ids[1]}, {pool_ids[2]}, {pool_ids[3]}, {size}, 4)
+    insert into active_pools values ({master_pool_id}, '{zone}', {pool_ids[0]}, {pool_ids[1]}, {pool_ids[2]}, {pool_ids[3]}, {curr_strength}, 4, FALSE)
     """
     cursor.execute(insert_query)
     print("Added an active pool")
-    
     pooled_query = f"""
-    update pool_applications set pooled = {True} where pool_id in {pool_ids}
+    update pool_applications set pooled = TRUE where pool_id in ({pool_ids[0]}, {pool_ids[1]}, {pool_ids[2]}, {pool_ids[3]})
     """
+    cursor.execute(pooled_query)
     conn.commit()
     conn.close()
 
@@ -55,7 +55,7 @@ async def pool_people_zone(data: List[Person], zone: str):
     conn, cursor = database.make_db()
     master_pool_id = random.randint(1_000, 10_000)
     check_query = f"""
-    select * from active_pools where master_pool_id = {master_pool_id} order by master_pool_id
+    select * from active_pools where master_pool_id = {master_pool_id}
     """
     cursor.execute(check_query)
     result = cursor.fetchall()

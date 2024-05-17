@@ -5,7 +5,7 @@ from stuff import tasks, models
 
 app = FastAPI()
 
-origins = ["http://localhost", "http://localhost:3000"]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -78,6 +78,7 @@ async def register_instant_cab(data: models.Instant_Ride_Register):
 @app.get("/driver_fetch_pools")
 async def driver_pools():
     res = await tasks.driver_fetch_pool()
+    print(res)
     return res
 
 

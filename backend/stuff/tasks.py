@@ -7,7 +7,7 @@ import secrets
 
 
 async def get_cost_per_person(distance: int, cost_per_lit: int, numpeople: int, mileage: int):
-    cost = float (distance * cost_per_lit * 1.33) / (mileage * numpeople)
+    cost = float (distance * cost_per_lit * 2.5) / (mileage * numpeople)
     rounded_cost = round(cost, 0)
     return rounded_cost
 
@@ -296,16 +296,14 @@ async def driver_fetch_pool():
     """
     conn, cursor = database.make_db()
     query = f"""
-    select * from active_pools
+    select * from active_pools where accepted = FALSE
     """
     cursor.execute(query)
     
     res = cursor.fetchall()
-    print(res)
     result = []
     for each in res:
         strength = 0
-        print(each)
         for i in [2, 3, 4, 5]:
             if each[i] != -1:
                 strength += 1
@@ -320,6 +318,7 @@ async def driver_fetch_pool():
         result.append(ride)
     conn.close()
     return {
+        'status': 200,
         'message': "Fetched all the pools",
         'pools': result
     }
@@ -332,7 +331,7 @@ async def driver_accept_pool(data: models.Accept_Pool_Ride):
     """
     conn, cursor = database.make_db()
     query = f"""
-    select * from active_pools where master_pool_id = {data.master_pool_id}
+    select * from active_pools where master_pool_id = {data.master_pool_id} and accepted = FALSE
     """
     cursor.execute(query)
     res = cursor.fetchall()
@@ -346,9 +345,8 @@ async def driver_accept_pool(data: models.Accept_Pool_Ride):
     """
     cursor.execute(insert_query)
     delete_query = f"""
-    delete from active_pools where master_pool_id = {data.master_pool_id}
+    update active_pools set accepted = TRUE where master_pool_id = {data.master_pool_id}
     """
-    print(delete_query)
     cursor.execute(delete_query)
     conn.commit()
     conn.close()
@@ -457,6 +455,7 @@ async def handle_specific_pool(data: models.Specific_Pool):
     cursor.execute(query)
     results = cursor.fetchall()
     result = results[0]
+    distance = 10
     answer = {
         "pool_id": data.pool_id,
         "email": result[1],
@@ -477,28 +476,31 @@ async def handle_specific_pool(data: models.Specific_Pool):
     cursor.execute(query)
     res = cursor.fetchall()
     pool_ids = []
-    master_pool_id = res[0][0]
-    for i in range(2, 6):
-        if res[0][i] != -1:
-            pool_ids.append(res[0][i])
-    # get all the emails of the people with the pool_ids
     people_in_pool = []
-    for id in pool_ids:
-        query = f"""
-        select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
-        """
-        print(query)
-        cursor.execute(query)
-        result = cursor.fetchall()
-        if len(result) == 0:
-          continue
-        person = {
-            "name": result[0][0],
-            "email": result[0][1],
-            "phone": result[0][2],
-            "photoURL": result[0][3]
-        }
-        people_in_pool.append(person)
+    master_pool_id = -1
+    strength = result[4]
+    if len(res) != 0:
+      master_pool_id = res[0][0]
+      strength = res[0][6]
+      for i in range(2, 6):
+          if res[0][i] != -1:
+              pool_ids.append(res[0][i])
+      # get all the emails of the people with the pool_ids
+      for id in pool_ids:
+          query = f"""
+          select name, email, phone, photoURL from registered_people where email = (select email from pool_applications where pool_id = {id})
+          """
+          cursor.execute(query)
+          result = cursor.fetchall()
+          if len(result) == 0:
+            continue
+          person = {
+              "name": result[0][0],
+              "email": result[0][1],
+              "phone": result[0][2],
+              "photoURL": result[0][3]
+          }
+          people_in_pool.append(person)
     answer['people'] = people_in_pool
     # getting the driver details
     query = f"""
@@ -528,6 +530,7 @@ async def handle_specific_pool(data: models.Specific_Pool):
       }
     answer['driver'] = driver
     conn.close()
+    answer['cost'] = await get_cost_per_person(59, 100, strength, 12)* strength
     return answer
 
 
