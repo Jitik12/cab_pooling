@@ -1,11 +1,4 @@
 import 'dart:convert';
-
-import 'package:CabX/Widgets/Ride%20Details%20Widgets/copassenger_details.dart';
-import 'package:CabX/Widgets/Ride%20Details%20Widgets/driver_details.dart';
-import 'package:CabX/Widgets/review_row.dart';
-import 'package:CabX/constants/colors.dart';
-import 'package:CabX/data/CoPassengerDetails.dart';
-import 'package:CabX/data/DriverDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -21,31 +14,22 @@ class _RideDetailsState extends State<RideDetails> {
   late int poolId;
   static const String backendUrl = "https://dhruvin-cabs.jitik.online:8000";
   late Uri url;
-  Map<String, dynamic> rideDetails = {};
-  late Future<Map<String, dynamic>> _rideDetailsFuture;
+  Map<String, dynamic>? rideDetails;
 
   @override
   void initState() {
     super.initState();
-    // Defer accessing ModalRoute.of(context) until after the build method
-    // by scheduling the initialization in a post-frame callback.
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    // Schedule the fetching of data after the first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Grab the pool_id from route arguments
       poolId = ModalRoute.of(context)!.settings.arguments as int;
-      url = Uri.parse("$backendUrl/specific_pool");
-      _rideDetailsFuture = fetchData(poolId, url);
+      // Send request to server
+      fetchRideDetails(poolId);
     });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Access route arguments and fetch data here
-    poolId = ModalRoute.of(context)!.settings.arguments as int;
+  Future<void> fetchRideDetails(int poolId) async {
     url = Uri.parse("$backendUrl/specific_pool");
-    fetchData(poolId, url);
-  }
-
-  Future<Map<String, dynamic>> fetchData(int poolId, Uri url) async {
     try {
       final response = await http.post(
         url,
@@ -54,162 +38,113 @@ class _RideDetailsState extends State<RideDetails> {
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        setState(() {
+          rideDetails = jsonDecode(response.body);
+        });
       } else {
         throw Exception('Failed to fetch data: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching data: $e');
+      setState(() {
+        rideDetails = {'error': 'Error fetching data: $e'};
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        shadowColor: blackColor,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 30,
-              color: blackColor,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
         title: Text(
           'Ride Details',
           style: GoogleFonts.poppins(
-            color: blackColor,
+            color: Colors.black,
             fontWeight: FontWeight.w500,
-            fontSize: 30,
+            fontSize: 24,
           ),
         ),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: FutureBuilder<Map<String, dynamic>>(
-        future: _rideDetailsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            rideDetails = snapshot.data ?? {};
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
-                child: Column(
+      body: rideDetails == null
+          ? Center(child: CircularProgressIndicator())
+          : rideDetails!.containsKey('error')
+          ? Center(child: Text(rideDetails!['error']))
+          : Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (rideDetails!['start'] != null)
+                Text(
+                  'Start: ${rideDetails!['start']}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              if (rideDetails!['destination'] != null)
+                Text(
+                  'End: ${rideDetails!['destination']}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue,
+                  ),
+                ),
+              SizedBox(height: 20),
+              if (rideDetails!['driver'] != null)
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (rideDetails['start'] != null)
-                              Flexible(
-                                child: Text(
-                                  'Start: ${rideDetails['start']}',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 24,
-                                    color: blueShade,
-                                  ),
-                                ),
-                              ),
-                            if (rideDetails['destination'] != null)
-                              Flexible(
-                                child: Text(
-                                  'End: ${rideDetails['destination']}',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 18,
-                                    color: blueShade,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                        const Icon(
-                          Icons.share,
-                          size: 24.0,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Center(
-                      child: Image.asset(
-                        'assets/images/ride_details_img.png',
-                        width: double.infinity,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    if (rideDetails['driver'] != null)
-                      DriverDetailsWidget(
-                        driverDetails: DriverDetails(
-                          name: rideDetails['driver']['name'],
-                          phone: rideDetails['driver']['phone'],
-                          vehicleNumber: rideDetails['driver']['car_no'],
-                          vehicleMake: rideDetails['driver']['car_model'],
-                        ),
-                      ),
-                    SizedBox(height: 15),
                     Text(
-                      'Trip Details',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      'Driver: ${rideDetails!['driver']['name']}',
+                      style: TextStyle(fontSize: 18),
                     ),
-                    SizedBox(height: 15),
-                    getReviewRow(name: 'Price', value: "2000"),
-                    SizedBox(height: 18),
-                    if (rideDetails['date'] != null)
-                      getReviewRow(name: 'Date', value: rideDetails['date']),
-                    SizedBox(height: 10),
-                    if (rideDetails['time'] != null)
-                      getReviewRow(name: 'Time', value: rideDetails['time']),
-                    SizedBox(height: 15),
                     Text(
-                      'Passengers',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      'Phone: ${rideDetails!['driver']['phone']}',
+                      style: TextStyle(fontSize: 18),
                     ),
-                    SizedBox(height: 15),
-                    if (rideDetails['people'] != null)
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: rideDetails['people'].length,
-                          itemBuilder: (context, index) {
-                            final passenger = rideDetails['people'][index];
-                            return ListTile(
-                              title: Text(passenger['name'] ?? ''),
-                              subtitle: Text(passenger['phone'] ?? ''),
-                              leading: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(passenger['photoURL'] ?? ''),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                    Text(
+                      'Vehicle: ${rideDetails!['driver']['car_no']} (${rideDetails!['driver']['car_model']})',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ],
                 ),
+              SizedBox(height: 20),
+              Text(
+                'Trip Details',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            );
-          }
-        },
+              if (rideDetails!['date'] != null)
+                Text('Date: ${rideDetails!['date']}', style: TextStyle(fontSize: 18)),
+              if (rideDetails!['time'] != null)
+                Text('Time: ${rideDetails!['time']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 20),
+              Text(
+                'Passengers',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (rideDetails!['people'] != null)
+                ...rideDetails!['people'].map<Widget>((passenger) {
+                  return ListTile(
+                    title: Text(passenger['name'] ?? ''),
+                    subtitle: Text(passenger['phone'] ?? ''),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(passenger['photoURL'] ?? ''),
+                    ),
+                  );
+                }).toList(),
+            ],
+          ),
+        ),
       ),
     );
   }
